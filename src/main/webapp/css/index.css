@@ -1,0 +1,71 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Nov 14, 2025, 3:41:43 PM
+    Author     : ASUS
+*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+main {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.card {
+    width: 30%;
+    height: 100%;
+    background-color: #fff;
+    padding: 3rem; 
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.card__logo {
+    width: 10rem;
+}
+
+.card__title {
+    width: 100%;
+}
+
+.card__title > h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.card__button {
+    width: 100%;
+}
+
+.card__button > button {
+    width: 100%;
+    height: 2rem;
+}
+
+.card__button > .divider {
+    margin: 1rem 50%;
+}
+
+.banner {
+    width: 70%;
+    height: 100%;
+    background-color: #DCD9FB;
+    padding: 4rem;
+}
