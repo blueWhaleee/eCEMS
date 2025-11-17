@@ -9,8 +9,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <title>eCEMS | Post</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/nav.css" type="text/css">
-    <link rel="stylesheet" href="../css/post.css" type="text/css">
+    <link rel="stylesheet" href="./css/nav.css" type="text/css">
+    <link rel="stylesheet" href="./css/post.css" type="text/css">
 </head>
 
 <body>
@@ -19,12 +19,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <!-- Navigation bar -->
         <nav class="menu">
             <div class="menu__logo">
-                <img src="../image/jpjpp_logo.png" alt="JPJPP Logo">
+                <img src="./image/jpjpp_logo.png" alt="JPJPP Logo">
                 <p>eCEMS</p>
             </div>
 
             <ul class="menu__button">
-                <li onclick="location.href='../home.html'" class="menu__button-item">
+                <li onclick="location.href='./home.html'" class="menu__button-item">
                     <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M3.75 14.25H0.75L14.25 0.75L27.75 14.25H24.75" stroke="white" stroke-width="1.5"
                             stroke-linecap="round" stroke-linejoin="round" />
@@ -37,7 +37,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     </svg>
                     <p>Home</p>
                 </li>
-                <li onclick="location.href='../elections.html'" class="menu__button-item menu__button-active">
+                <li onclick="location.href='./elections.html'" class="menu__button-item menu__button-active">
                     <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M17.6925 31.5H7.5C5.84315 31.5 4.5 30.1569 4.5 28.5V10.5C4.5 8.84315 5.84315 7.5 7.5 7.5H25.5C27.1569 7.5 28.5 8.84315 28.5 10.5V16.5"
@@ -59,7 +59,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
             <div class="menu__profile">
                 <div class="menu__profile__image">
-                    <img src="" alt="">
+                    <img src="./image/profile_img.png" alt="Profile Image">
                 </div>
                 <p>2025148599</p>
                 <div class="menu__profile__role">
@@ -76,11 +76,14 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <h1>Post</h1>
 
                 <!-- Return Button -->
-                <button class="main__container__return" onclick="location.href='../elections.html'">
+                <button class="main__container__return" onclick="location.href='./elections.html'">
                     <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4.16675 10.9999H15.8334" stroke="#121026" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M4.16675 11L9.16675 16" stroke="#121026" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M4.16675 11L9.16675 6" stroke="#121026" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M4.16675 10.9999H15.8334" stroke="#121026" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M4.16675 11L9.16675 16" stroke="#121026" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M4.16675 11L9.16675 6" stroke="#121026" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
                     </svg>
                     Return
                 </button>
@@ -89,15 +92,61 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                 <!-- Election Post Title & Desc -->
                 <div class="main__container__title">
                     <h1>Jawatankuasa Perwakilan Pelajar Fakulti Sains Komputer dan Matematik</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ante mi, vehicula in tincidunt a, dictum vitae tortor. In vitae lorem vel augue sagittis pulvinar nec sed massa. Nunc ut congue diam, ut accumsan odio.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ante mi, vehicula in tincidunt
+                        a, dictum vitae tortor. In vitae lorem vel augue sagittis pulvinar nec sed massa. Nunc ut congue
+                        diam, ut accumsan odio.</p>
                 </div>
                 <!-- End Election Post Title & Desc -->
 
+                <!-- If Status = Upcoming -->
                 <!-- Candidate Form -->
                 <form class="main__container__form">
+                    <div class="main__container__form-title">
+                        <h3>Register as a Candidate</h3>
+                        <p>Fill in the details below to complete your registration</p>
+                    </div>
+                    <div class="main__container__form-multi">
+                        <div class="main__container__form-input">
+                            <label for="">Full Name</label>
+                            <input type="text" disabled value="Amer Nafis bin Abdul Razak">
+                        </div>
+                        <div class="main__container__form-input">
+                            <label for="">Student Number</label>
+                            <input type="text" disabled value="2025148599">
+                        </div>
+                    </div>
+                    <div class="main__container__form-multi">
+                        <div class="main__container__form-input">
+                            <label for="">Faculty</label>
+                            <input type="text" disabled value="CS - Faculty of Computer and Mathematical Sciences">
+                        </div>
+                        <div class="main__container__form-input">
+                            <label for="">Program</label>
+                            <input type="text" disabled value="CDCS230 - Bachelor of Computer Science (Hons.)">
+                        </div>
+                    </div>
+                    <div class="main__container__form-input">
+                        <label for="">Campaign Slogan</label>
+                        <input type="text" value="">
+                    </div>
+                    <div class="main__container__form-input">
+                        <label for="">Campaign Manifesto</label>
+                        <textarea rows="3"></textarea>
+                    </div>
 
+                    <button>
+
+                    </button>
                 </form>
                 <!-- End Candidate Form -->
+
+                <!-- If Status = Active -->
+                <!-- Show candidate -->
+                <!-- End Show candidate -->
+
+                <!-- If Status = Closed -->
+                <!-- Show Result -->
+                 <!-- End Show Result -->
 
             </div>
 
@@ -121,7 +170,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <p>Created By</p>
                         <div>
                             <div class="main__side__profile-user-img">
-                                <img src="../image/profile_img.png" alt="">
+                                <img src="./image/profile_img.png" alt="">
                             </div>
                             <div class="main__side__profile-user-desc">
                                 <h4>Dr. Hafiz bin Ramli</h4>
