@@ -227,7 +227,6 @@ body {
     width: 100%;
     margin: 0 auto;
     background: #fff;
-    padding: 20px;
     border-radius: 16px;
     border: 1px solid rgba(0, 0, 0, 0.15);
 
@@ -236,9 +235,10 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
     flex-wrap: wrap;
+    padding: 1.5rem;
     gap: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
 .show-entries {
     display: flex;
@@ -308,7 +308,7 @@ table.dataTable tbody td {
 }
 
 .dt-container .bottom {
-    margin-top: 1rem;
+    margin: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;

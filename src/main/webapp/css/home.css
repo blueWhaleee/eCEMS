@@ -94,7 +94,7 @@ body {
 
 .main__container__data-item > h1 {
     font-size: 3.5rem;
-    font-weight: 300;
+    font-weight: bold;
 }
 
 .main__container__data-item > div {

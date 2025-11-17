@@ -135,7 +135,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                 <option value="50">50</option>
                                 <option value="100">100</option>
                             </select>
-                            <span>entries</span>
                         </div>
 
                         <div style="display: flex; align-items: center; gap: 15px;">
@@ -151,10 +150,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                     <table id="electionTable" class="display" style="width:100%">
                         <thead>
                             <tr>
-                                <th>ELECTION NAME</th>
+                                <th>ELECTION TITLE</th>
                                 <th>STATUS</th>
                                 <th>CREATED BY</th>
-                                <th>CREATED DATE</th>
+                                <th>CREATION DATE</th>
                                 <th>ACTION</th>
                             </tr>
                         </thead>
@@ -227,7 +226,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             dom: 'rt<"bottom"ip><"clear">',
             columnDefs: [
                 { orderable: false, targets: 4 }, 
-                { searchable: false, targets: [1, 2, 4] }
+                { searchable: false, targets: [1, 2, 3] }
             ],
             language: {
                 search: "",
