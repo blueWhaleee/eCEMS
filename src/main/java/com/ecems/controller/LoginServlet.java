@@ -1,6 +1,6 @@
 package com.ecems.controller;
 
-import com.ecems.model.user;
+import com.ecems.model.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,7 +17,7 @@ public class LoginServlet extends HttpServlet
         String studentNo = request.getParameter("studentNo");
         String password = request.getParameter("password");
         
-        user usr = new user();
+        User usr = new User();
         usr.setStudentNo(studentNo);
         usr.setPassword(password);
         

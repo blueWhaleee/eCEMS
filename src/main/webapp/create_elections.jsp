@@ -1,0 +1,267 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.ecems.model.User" %>
+<%
+    User usr = (User) session.getAttribute("loggedInUser");
+    
+    if(usr == null)
+    {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+    
+    if(!"Staff".equals(usr.getRole()))
+    {
+        response.sendRedirect("home.jsp");
+        return;
+    }
+%>
+
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+
+<head>
+    <title>eCEMS | Elections</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/nav.css" type="text/css">
+    <link rel="stylesheet" href="css/create_elections.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+</head>
+
+<body>
+    <div class="container">
+
+         <!-- Navigation bar -->
+        <nav class="menu">
+            <div class="menu__logo">
+                <img src="./image/jpjpp_logo.png" alt="JPJPP Logo">
+                <p>eCEMS</p>
+            </div>
+
+            <ul class="menu__button">
+                <li onclick="location.href='home_staff.jsp'" class="menu__button-item">
+                    <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.75 14.25H0.75L14.25 0.75L27.75 14.25H24.75" stroke="white" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M3.75 14.25V24.75C3.75 26.4069 5.09315 27.75 6.75 27.75H21.75C23.4069 27.75 24.75 26.4069 24.75 24.75V14.25"
+                            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M9.75 27.75V18.75C9.75 17.0931 11.0931 15.75 12.75 15.75H15.75C17.4069 15.75 18.75 17.0931 18.75 18.75V27.75"
+                            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p>Home</p>
+                </li>
+                <li onclick="location.href='create_elections.jsp'" class="menu__button-item menu__button-active">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="7.5" width="24" height="24" rx="2" stroke="#E1DEF5" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M24 4.5V10.5" stroke="#E1DEF5" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 4.5V10.5" stroke="#E1DEF5" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M6 16.5H30" stroke="#E1DEF5" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15 24H21" stroke="#E1DEF5" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M18 21V27" stroke="#E1DEF5" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <p>Create <br>Elections</p>
+                </li>
+                <li onclick="location.href='reports.jsp'" class="menu__button-item">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.5 7.5H10.5C8.84315 7.5 7.5 8.84315 7.5 10.5V28.5C7.5 30.1569 8.84315 31.5 10.5 31.5H25.5C27.1569 31.5 28.5 30.1569 28.5 28.5V10.5C28.5 8.84315 27.1569 7.5 25.5 7.5H22.5" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <rect x="13.5" y="4.5" width="9" height="6" rx="2" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M13.5001 18H13.5151" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.5 18H22.5" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M13.5001 24H13.5151" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M19.5 24H22.5" stroke="white" stroke-opacity="0.9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <p>Reports</p>
+                </li>
+            </ul>
+
+            <div class="menu__profile">
+                <div class="menu__profile__image">
+                    <img src="./image/profile_img.png" alt="Profile Image">
+                </div>
+                <p> <%= usr.getStudentNo() %> </p>
+                <div class="menu__profile__role">
+                    <%= usr.getRole() %>
+                </div>
+                <button onclick="location.href='NavigationServlelt?page=logout'">Logout</button>
+            </div>
+
+        </nav>
+        <!-- End Navigation Bar -->
+
+        <!-- Main -->
+        <main class="main">
+            <div class="main__container">
+                <h1>Create Elections</h1>
+
+                <!-- Elections Data -->
+                <div class="main__container__data">
+                    <div class="main__container__data-item2">
+                        <p>Total Elections</p>
+                        <h1>6</h1>
+                    </div>
+                    <div class="main__container__data-item upcoming">
+                        <h1>6</h1>
+                        <div>
+                            <h3>Upcoming</h3>
+                            <p>Elections</p>
+                        </div>
+                    </div>
+                    <div class="main__container__data-item active">
+                        <h1>12</h1>
+                        <div>
+                            <h3>Active</h3>
+                            <p>Elections</p>
+                        </div>
+                    </div>
+                    <div class="main__container__data-item closed">
+                        <h1>24</h1>
+                        <div>
+                            <h3>Closed</h3>
+                            <p>Elections</p>
+                        </div>
+                    </div>
+                    <div class="main__container__data-item cancelled">
+                        <h1>24</h1>
+                        <div>
+                            <h3>Cancelled</h3>
+                            <p>Elections</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Elections Data -->
+
+                <!-- Datatable -->
+                <div class="datatable-container">
+                    <div class="header-bar">
+                        <div class="show-entries">
+                            <label for="page-length">Show</label>
+                            <select id="page-length">
+                                <option value="10" selected>10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div class="search-box">
+                                <label for="global-search" style="display:none;">Search</label>
+                                <input type="text" id="global-search" placeholder="Search Election">
+                            </div>
+                            <button onclick="location.href='create_elections_create.jsp'" class="create-btn">+ Create Election</button>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <table id="electionTable" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ELECTION TITLE</th>
+                                <th>STATUS</th>
+                                <th>CREATED BY</th>
+                                <th>CREATION DATE</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Jawatankuasa Perwakilan Pelajar Fakulti Sains Komputer dan Komputer</td>
+                                <td><span class="status upcoming">Upcoming</span></td>
+                                <td><img src="https://i.pravatar.cc/32?img=1" alt="Amer Syafiq" class="avatar"> Amer Syafiq bin Abdul Razak</td>
+                                <td>14 Apr 2021, 8:43 PM</td>
+                                <td><a href="create_elections_upcoming.jsp" class="action-link">Modify</a></td>
+                            </tr>
+                            <tr>
+                                <td>Jawatankuasa Perwakilan Pelajar Fakulti Sains Komputer dan Komputer</td>
+                                <td><span class="status active">Active</span></td>
+                                <td><img src="https://i.pravatar.cc/32?img=1" alt="Amer Syafiq" class="avatar"> Amer Syafiq bin Abdul Razak</td>
+                                <td>14 Apr 2021, 8:43 PM</td>
+                                <td><a href="create_elections_active.jsp" class="action-link">Modify</a></td>
+                            </tr>
+                            <tr>
+                                <td>Jawatankuasa Perwakilan Pelajar Fakulti Sains Komputer dan Komputer</td>
+                                <td><span class="status closed">Closed</span></td>
+                                <td><img src="https://i.pravatar.cc/32?img=2" alt="Amer Syafiq" class="avatar"> Amer Syafiq bin Abdul Razak</td>
+                                <td>14 Apr 2021, 8:43 PM</td>
+                                <td><a href="post.html?id=1" class="action-link">View</a></td>
+                            </tr>
+                            <tr>
+                                <td>TEST 1</td>
+                                <td><span class="status cancelled">Cancelled</span></td>
+                                <td><img src="https://i.pravatar.cc/32?img=1" alt="Amer Syafiq" class="avatar"> Amer Syafiq bin Abdul Razak</td>
+                                <td>14 Apr 2021, 8:43 PM</td>
+                                <td><a href="#" class="action-link">View</a></td>
+                            </tr>
+                            <tr>
+                                <td>TEST 2</td>
+                                <td><span class="status cancelled">Cancelled</span></td>
+                                <td><img src="https://i.pravatar.cc/32?img=2" alt="Amer Syafiq" class="avatar"> Amer Syafiq bin Abdul Razak</td>
+                                <td>14 Apr 2021, 8:43 PM</td>
+                                <td><a href="#" class="action-link">View</a></td>
+                            </tr>
+                            <tr>
+                                <td>TEST 3</td>
+                                <td><span class="status cancelled">Cancelled</span></td>
+                                <td><img src="https://i.pravatar.cc/32?img=2" alt="Amer Syafiq" class="avatar"> Amer Syafiq bin Abdul Razak</td>
+                                <td>14 Apr 2021, 8:43 PM</td>
+                                <td><a href="#" class="action-link">View</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+              <!-- End Datatable -->
+
+            </div>
+        </main>
+        <!-- End Main -->
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        const table = $('#electionTable').DataTable({
+            paging: true,
+            pageLength: 10,
+            lengthMenu: [10, 25, 50, 100],
+            searching: true,
+            ordering: true,
+            info: true,
+            responsive: true,
+            dom: 'rt<"bottom"ip><"clear">',
+            columnDefs: [
+                { orderable: false, targets: 4 }, 
+                { searchable: false, targets: [1, 2, 3] }
+            ],
+            language: {
+                search: "",
+                searchPlaceholder: "Search Election",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries",
+                lengthMenu: "Show _MENU_ entries",
+                paginate: {
+                    previous: "«",
+                    next: "»"
+                }
+            },
+            initComplete: function () {
+                $('#page-length').val(this.api().page.len());
+            }
+        });
+
+        $('#page-length').on('change', function () {
+            table.page.len($(this.val())).draw();
+        });
+
+        $('#global-search').on('keyup', function () {
+            table.search(this.value).draw();
+        });
+    });
+</script>
+</html>
