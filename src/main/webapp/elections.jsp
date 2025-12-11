@@ -1,0 +1,176 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.ecems.model.User" %>
+<%
+    User usr = (User) session.getAttribute("loggedInUser");
+    
+    if(usr == null)
+    {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+%>
+
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+
+<head>
+    <title>eCEMS | Elections</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/nav.css" type="text/css">
+    <link rel="stylesheet" href="css/elections.css" type="text/css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Navigation bar -->
+        <nav class="menu">
+            <div class="menu__logo">
+                <img src="./image/jpjpp_logo.png" alt="JPJPP Logo">
+                <p>eCEMS</p>
+            </div>
+
+            <ul class="menu__button">
+                <li onclick="location.href='home.jsp'" class="menu__button-item">
+                    <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.75 14.25H0.75L14.25 0.75L27.75 14.25H24.75" stroke="white" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M3.75 14.25V24.75C3.75 26.4069 5.09315 27.75 6.75 27.75H21.75C23.4069 27.75 24.75 26.4069 24.75 24.75V14.25"
+                            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <path
+                            d="M9.75 27.75V18.75C9.75 17.0931 11.0931 15.75 12.75 15.75H15.75C17.4069 15.75 18.75 17.0931 18.75 18.75V27.75"
+                            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <p>Home</p>
+                </li>
+                <li onclick="location.href='elections.jsp'" class="menu__button-item menu__button-active">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M17.6925 31.5H7.5C5.84315 31.5 4.5 30.1569 4.5 28.5V10.5C4.5 8.84315 5.84315 7.5 7.5 7.5H25.5C27.1569 7.5 28.5 8.84315 28.5 10.5V16.5"
+                            stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="27" cy="27" r="6" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M22.5 4.5V10.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M10.5 4.5V10.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M4.5 16.5H28.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M27 24.744V27L28.5 28.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                    <p>Elections</p>
+                </li>
+            </ul>
+
+            <div class="menu__profile">
+                <div class="menu__profile__image">
+                    <img src="./image/profile_img.png" alt="Profile Image">
+                </div>
+                <p>2025148599</p>
+                <div class="menu__profile__role">
+                    Student
+                </div>
+                <button onclick="location.href='NavigationServlelt?page=logout'">Logout</button>
+            </div>
+
+        </nav>
+        <!-- End Navigation Bar -->
+
+        <!-- Main -->
+        <main class="main">
+            <div class="main__container">
+                <h1>Elections</h1>
+
+                <!-- Elections Data -->
+                <div class="main__container__data">
+                    <div class="main__container__data-item">
+                        <h1>6</h1>
+                        <div>
+                            <h3>Upcoming</h3>
+                            <p>Elections</p>
+                        </div>
+                    </div>
+                    <div class="main__container__data-item">
+                        <h1>12</h1>
+                        <div>
+                            <h3>Active</h3>
+                            <p>Elections</p>
+                        </div>
+                    </div>
+                    <div class="main__container__data-item">
+                        <h1>24</h1>
+                        <div>
+                            <h3>Closed</h3>
+                            <p>Elections</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Elections Data -->
+
+                <!-- Elections Search -->
+                <form class="main__container__form" action="elections.html" method="GET">
+
+                    <div class="main__container__search">
+                        <input type="text" placeholder="Search Election">
+                        <svg width="33" height="33" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="17" cy="17" r="7" stroke="#2F2B3D" stroke-opacity="0.9" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M28 28L22 22" stroke="#2F2B3D" stroke-opacity="0.9" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <button type="submit">Search</button>
+                    </div>
+
+                    <div class="main__container__filter">
+                        <button type="submit" class="main__container__filter-active">All</button>
+                        <button type="submit">Voted</button>
+                        <button type="submit">Active</button>
+                        <button type="submit">Upcoming</button>
+                        <button type="submit">Closed</button>
+                    </div>
+
+                </form>
+                <!-- End Elections Search -->
+
+                <!-- Election Posts -->
+                <div class="main__container__posts">
+                    <button onclick="location.href='./post.html'">
+                        <p class="upcoming">Upcoming</p>
+                        <h3>Jawatankuasa Perwakilan Pelajar Fakulti Sains Komputer dan Matematik</h3>
+                        <div>
+                            <p>Created 3 days ago</p>
+                            <p class="special">Candidate Registration</p>
+                        </div>
+                    </button>
+                    <button onclick="location.href='./post.html'">
+                        <p class="active">Active</p>
+                        <h3>Jawatankuasa Perwakilan Pelajar Fakulti Sains Komputer dan Matematik</h3>
+                        <div>
+                            <p>Started 3 days ago</p>
+                            <p>Ending in 3 days</p>
+                        </div>
+                    </button>
+                    <button onclick="location.href='./post.html'">
+                        <p class="closed">Closed</p>
+                        <h3>Jawatankuasa Perwakilan Pelajar Fakulti Sains Komputer dan Matematik</h3>
+                        <div>
+                            <p>Created 3 days ago</p>
+                            <p class="special">View Results</p>
+                        </div>
+                    </button>
+                </div>
+                <!-- End Election Posts -->
+            </div>
+        </main>
+        <!-- End Main -->
+    </div>
+</body>
+
+</html>
