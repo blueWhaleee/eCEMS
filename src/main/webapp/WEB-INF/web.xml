@@ -12,6 +12,14 @@
         <servlet-name>NavigationServlet</servlet-name>
         <servlet-class>com.ecems.controller.NavigationServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VoteServlet</servlet-name>
+        <servlet-class>com.ecems.controller.VoteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CandidateRegistrationServlet</servlet-name>
+        <servlet-class>com.ecems.controller.CandidateRegistrationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -23,6 +31,14 @@
     <servlet-mapping>
         <servlet-name>NavigationServlet</servlet-name>
         <url-pattern>/NavigationServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VoteServlet</servlet-name>
+        <url-pattern>/VoteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CandidateRegistrationServlet</servlet-name>
+        <url-pattern>/CandidateRegistrationServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
