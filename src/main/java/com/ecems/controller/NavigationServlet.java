@@ -7,8 +7,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import javax.servlet.*;
-import javax.servlet.http.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
 
 
 public class NavigationServlet extends HttpServlet
@@ -17,7 +17,7 @@ public class NavigationServlet extends HttpServlet
             throws ServletException, IOException
     {
         HttpSession session = request.getSession();
-        User usr = (User) session.getAtribute("loggedInUser");
+        User usr = (User) session.getAttribute("loggedInUser");
         
         if(usr == null)
         {
