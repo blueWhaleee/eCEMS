@@ -1,48 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>com.ecems.controller.LoginServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>java</servlet-name>
-        <servlet-class>NavigationServlet.java</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>NavigationServlet</servlet-name>
-        <servlet-class>com.ecems.controller.NavigationServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>VoteServlet</servlet-name>
-        <servlet-class>com.ecems.controller.VoteServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CandidateRegistrationServlet</servlet-name>
-        <servlet-class>com.ecems.controller.CandidateRegistrationServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
-        <url-pattern>/LoginServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>java</servlet-name>
-        <url-pattern>/java</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>NavigationServlet</servlet-name>
-        <url-pattern>/NavigationServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>VoteServlet</servlet-name>
-        <url-pattern>/VoteServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CandidateRegistrationServlet</servlet-name>
-        <url-pattern>/CandidateRegistrationServlet</url-pattern>
-    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

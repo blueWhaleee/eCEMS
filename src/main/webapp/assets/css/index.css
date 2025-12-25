@@ -50,17 +50,44 @@ main {
     margin-bottom: 0.5rem;
 }
 
-.card__button {
+.card__button__container {
     width: 100%;
 }
 
-.card__button > button {
+.card__button__container > button {
     width: 100%;
     height: 2rem;
 }
 
-.card__button > .divider {
-    margin: 1rem 50%;
+.card__button__container > .divider {
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.card__button {
+    color: white;
+    border: none;
+    background: #7367F0;
+    box-shadow: 0px 2px 6px rgba(115, 103, 240, 0.3);
+    border-radius: 6px;
+    padding: 1.25rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.divider > .hr-divider {
+    border-color: #cccbd156;
+    height: 1px;
+    display: flex;
+    width: 100%;
+}
+
+.divider > p {
+    color: #CCCBD1;
 }
 
 .card__form {
@@ -77,18 +104,22 @@ main {
 }
 
 .card__form > div > label {
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 15px;
+
     color: black;
     margin-bottom: 0.25rem;
 }
 
-.card__form > div > input {
+.card__form > div > input, .card__form > div > select {
     height: 1.5rem;
     padding: 1rem;
+    border: 1px solid rgba(47, 43, 61, 0.22);
+    border-radius: 6px;
 }
 
-.card__form > .card__button {
+.card__form > .card__button__container {
     margin-top: 0.5rem;
 }
 

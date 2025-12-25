@@ -1,0 +1,23 @@
+
+<%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title><c:choose><c:when test="${not empty pageTitle}">${pageTitle} | eCEMS</c:when><c:otherwise>eCEMS</c:otherwise></c:choose></title>
+
+    <!-- Base path for all relative URLs -->
+    <base href="${pageContext.request.contextPath}/">
+  
+    <!-- eCEMS Core CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/index.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/nav.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/post.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/elections.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/create_elections.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/create_elections_create.css" type="text/css">
+</head>

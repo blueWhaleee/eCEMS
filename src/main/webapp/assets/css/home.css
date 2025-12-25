@@ -55,8 +55,10 @@ body {
 }
 
 .main__container__messagebox > p {
-    font-size: 1.75rem;
     margin-top: 0.25rem;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
 }
 
 .main__container__messagebox > img {
