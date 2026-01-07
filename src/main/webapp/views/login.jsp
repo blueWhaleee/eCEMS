@@ -9,59 +9,54 @@
 <html>
     <%@ include file="/WEB-INF/jspf/head.jspf" %>
     <body>
-        <main>
-            <!-- Login/Sign Up -->
-            <div class="card">
-                <img class="card__logo" src="${pageContext.request.contextPath}/assets/image/uitm_logo.png" alt="UiTM Logo">
-                <div class="card__title">
-                    <h1>Welcome to UiTM eCEMS 👋🏻</h1>
-                    <p>Sign in into your account</p>
+        <main class="container-fluid p-0 vh-100 overflow-hidden position-relative">
+            <div class="row g-0 h-100">
+                
+                <div class="col-lg-4 col-xl-4 bg-white p-4 p-md-5 d-flex flex-column justify-content-center align-items-center">
+                    
+                    <img class="mb-4" src="${pageContext.request.contextPath}/assets/image/uitm_logo.png" 
+                        alt="UiTM Logo" style="width: 10rem;">
+                    
+                    <div class="w-100 mb-3">
+                        <h1 class="h4 fw-bold">Welcome to UiTM eCEMS 👋🏻</h1>
+                        <p class="text-secondary small">Sign in into your account</p>
+                    </div>
+
+                    <form class="w-100" action="${pageContext.request.contextPath}/login" method="POST">
+                        <div class="mb-3">
+                            <label for="stud_number" class="form-label small fw-semibold">Student No.</label>
+                            <input name="stud_number" type="text" class="form-control form-control-lg fs-6" 
+                                placeholder="Enter your Student No." required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="form-label small fw-semibold">Password</label>
+                            <input name="password" type="password" class="form-control form-control-lg fs-6" 
+                                placeholder="············" required>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100 py-2 shadow-sm mb-3" type="submit">Sign In</button>
+                    </form>
+                    <p class="small text-secondary">
+                        New on our platform?
+                        <a href="${pageContext.request.contextPath}/register" class="text-decoration-none fw-semibold">Create an account</a>
+                    </p>
+                </div>
+                <div class="col-lg-8 col-xl-8 d-none d-lg-flex bg-primary-subtle justify-content-center align-items-center p-5">
+                    <img src="${pageContext.request.contextPath}/assets/image/banner.png" 
+                        alt="Banner" class="img-fluid" style="max-height: 80vh;">
+                </div>
                 </div>
 
-                <!-- Login Form -->
-                <form class="card__form" action="${pageContext.request.contextPath}/login" method="POST">
-                    <div>
-                        <label for="stud_number">Student No.</label>
-                        <input name="stud_number" type="text" placeholder="Enter your Student No.">
-                    </div>
-                    <div>
-                        <label for="password">Password</label>
-                        <input name="password" type="password" placeholder="············">
-                    </div>
-                    <div class="card__button__container">
-                        <button class="card__button" type="submit">Sign In</button>
-                    </div>
-                </form>
-                <!-- End Login Form-->
-
-                <p class="card__footer">
-                    New on our platform?
-                    <a href="${pageContext.request.contextPath}/register">Create an account</a>
-                </p>
-            </div>
-            <!-- End Login/Sign Up -->
-
-            <!-- Banner -->
-            <div class="banner">
-                <img src="${pageContext.request.contextPath}/assets/image/banner.png" alt="Banner">
-            </div>
-            <!-- End Banner -->
-
-            <%-- Error Display Start --%>
             <c:if test="${not empty errors}">
-                <div class="error">
+                <div class="position-absolute bottom-0 end-0 p-3" style="z-index: 1050; width: 100%; max-width: 400px;">
                     <c:forEach var="err" items="${errors}">
-                        <div class="error__item">
-                            <p>${err}</p>
-                            <svg style="cursor: pointer;" width="20" height="20" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="this.closest('.error__item').remove()">
-                                <path d="M112 682.24L688 106.24" stroke="currentColor" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M112 106.24L688 682.24" stroke="currentColor" stroke-width="48" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
+                        <div class="alert alert-danger alert-dismissible fade show shadow-sm border-danger-subtle d-flex align-items-center" role="alert">
+                            <div class="flex-grow-1">${err}</div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     </c:forEach>
                 </div>
             </c:if>
-            <%-- Error Display END --%>
-        </main>
+            </main>
     </body>
 </html>

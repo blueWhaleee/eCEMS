@@ -1,0 +1,9 @@
+
+<%-- jQuery --%>
+<script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
+
+<%-- Bootstrap JS --%>
+<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+
+<%-- eCEMS JS --%>
+<script src="${pageContext.request.contextPath}/assets/js/ecems.js"></script>

@@ -27,7 +27,14 @@ public class passwordHash {
             return sb.toString();
             
         } catch(NoSuchAlgorithmException ex) {
+            ex.printStackTrace();
         }
         return "";
+    }
+
+    public static String picturePath(String stud_number) {
+        String id = stud_number + "UiTMUCMS";
+        String path = "https://cdn.uitm.link/gambar_warga/" + doHashing(id) + ".png";
+        return path;
     }
 }

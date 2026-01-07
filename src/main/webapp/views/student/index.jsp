@@ -3,95 +3,92 @@
     Created on : Dec 25, 2025, 9:56:32 PM
     Author     : ASUS
 --%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="pageTitle" value="Home" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
     <%@ include file="/WEB-INF/jspf/head.jspf" %>
+    <c:set var="pageTitle" value="Home" />
+    
     <body>
-        <div class="container">
+        <div class="d-flex vh-100 overflow-hidden">
 
-            <!-- Navigation bar -->
-            <%@ include file="/WEB-INF/jspf/nav.jspf" %>
-            <!-- End Navigation Bar -->
+            <div class="h-100">
+                <%@ include file="/WEB-INF/jspf/nav.jspf" %>
+            </div>
 
-            <!-- Main -->
-            <main class="main">
-                <div class="main__container">
-                    <h1>Home</h1>
+            <main class="d-flex flex-grow-1 overflow-hidden">
+                
+                <div class="flex-grow-1 rounded-start-4 p-4 p-xl-5 overflow-auto no-scrollbar d-flex flex-column gap-4" style="background-color: #F3F9FE;">
+                    <h1 class="h4 fw-bold mb-0">Home</h1>
 
-                    <!-- Message Box -->
-                    <div class="main__container__messagebox">
-                        <h2>Welcome Back,</h2>
-                        <p>${sessionScope.loggedUser.full_name}</p>
-                        <img src="${pageContext.request.contextPath}/assets/image/home_logo.svg" alt="">
-                    </div>
-                    <!-- End Message Box -->
-
-                    <!-- Recent Votes -->
-                    <div class="main__container__recent">
-                        <h3>Recent Votes</h3>
-
-                        <!-- Table -->
-                        <table class="main__container__table">
-                            <thead>
-                                <tr>
-                                    <th>ELECTIONS</th>
-                                    <th>VOTE</th>
-                                    <th>DATE</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><div>Jawatankuasa Perwakilan Pelajar Fakulti Sains Komputer dan Matematik</div></td>
-                                    <td><div>Ali bin Abu</div></td>
-                                    <td><div>10, Jan 2020 20:07</div></td>
-                                </tr>
-                                <tr>
-                                    <td><div>Jawatankuasa Perwakilan Kolej UiTM Shah Alam</div></td>
-                                    <td><div>Ghana</div></td>
-                                    <td><div>11, Jan 2020 10:16</div></td>
-                                </tr>
-                                <tr>
-                                    <td><div>Jawatankuasa Perwakilan Pelajar Fakulti Sains Komputer dan Matematik</div></td>
-                                    <td><div>Ali bin Abu</div></td>
-                                    <td><div>10, Jan 2020 20:07</div></td>
-                                </tr>
-                                <tr>
-                                    <td><div>Jawatankuasa Perwakilan Kolej UiTM Shah Alam</div></td>
-                                    <td><div>Ghana</div></td>
-                                    <td><div>11, Jan 2020 10:16</div></td>
-                                </tr>
-                                <tr>
-                                    <td><div>Jawatankuasa Perwakilan Pelajar Fakulti Sains Komputer dan Matematik</div></td>
-                                    <td><div>Ali bin Abu</div></td>
-                                    <td><div>10, Jan 2020 20:07</div></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- End Table -->
-                    </div>
-                    <!-- End Recent Votes -->
-
-                    <!-- Elections Button -->
-                    <div class="main__container__button">
-                        <div>
-                            <h3>View Elections</h2>
-                            <p>Vote in elections or register as candidate</p>
+                    <div class="rounded-4 px-5 py-4 text-white position-relative shadow-sm" style="background: linear-gradient(90deg, #121026 0%, #7065E9 100%);">
+                        <div class="position-relative" style="z-index: 2;">
+                            <h2 class="display-6 fw-bold mb-0">Welcome Back,</h2>
+                            <p class="fs-4 text-white fw-lighter mb-0">${sessionScope.loggedUser.full_name}</p>
                         </div>
-                        <button onclick="location.href='elections.html'">
+                        <img src="${pageContext.request.contextPath}/assets/image/home_logo.svg" alt="Home Logo" class="position-absolute d-none d-md-block" style="width: 14rem; right: 5%; top: -20px;">
+                    </div>
+
+                    <div class="mt-2">
+                        <h3 class="h6 fw-bold text-dark text-uppercase mb-3">Recent Votes</h3>
+
+                        <div class="table-responsive mx-3">
+                            <table class="table table-borderless table-striped table-rounded mb-0" style="border-collapse: separate; border-spacing: 0 5px;">                                
+                                <thead class="text-secondary small fw-bold">
+                                    <tr>
+                                        <th class="ps-4" style="width: 50%;">ELECTIONS</th>
+                                        <th class="">VOTE</th>
+                                        <th class="text-end pe-4">DATE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="py-2 ps-4 text-secondary fw-normal rounded-start-5">Jawatankuasa Perwakilan Pelajar Fakulti Sains Komputer dan Matematik</td>
+                                        <td class="py-2 text-secondary">2025148595</td>
+                                        <td class="py-2 text-end pe-4 text-secondary rounded-end-5">10, Jan 2020 20:07</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 ps-4 text-secondary fw-normal rounded-start-5">Jawatankuasa Perwakilan Kolej UiTM Shah Alam</td>
+                                        <td class="py-2 text-secondary">2025148599</td>
+                                        <td class="py-2 text-end pe-4 text-secondary rounded-end-5">11, Jan 2020 10:16</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 ps-4 text-secondary fw-normal rounded-start-5">Jawatankuasa Perwakilan Kolej UiTM Shah Alam</td>
+                                        <td class="py-2 text-secondary">2025148333</td>
+                                        <td class="py-2 text-end pe-4 text-secondary rounded-end-5">11, Jan 2020 10:16</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="bg-primary-subtle rounded-4 p-4 px-5 d-flex align-items-center justify-content-between mt-auto">
+                        <div>
+                            <h3 class="h5 fw-bold text-dark mb-0">View Elections</h3>
+                            <p class="small text-dark opacity-75 mb-0">Vote in elections or register as candidate</p>
+                        </div>
+                        <button class="btn btn-outline-primary bg-white text-primary rounded-pill px-4 shadow-sm d-flex justify-content-between align-items-center gap-2" onclick="location.href='elections.html'">
                             Elections
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.16675 9.99992H15.8334" stroke="#7367F0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10.8333 15L15.8333 10" stroke="#7367F0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10.8333 5L15.8333 10" stroke="#7367F0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
                         </button>
                     </div>
-                    <!-- End Elections Button -->
 
                 </div>
-                <div class="main__side">
-                    <h3>Statistics</h3>
-                </div>
+
+                <div class="d-none d-xl-block bg-white p-4 p-xl-5" style="width: 300px; min-width: 25%;">
+                    <h3 class="h6 fw-bold text-dark text-uppercase">Statistics</h3>
+                    <hr class="text-muted">
+                    </div>
+
             </main>
-            <!-- End Main -->
         </div>
+
+        <%-- Javascripts  --%>
+        <%@ include file="/WEB-INF/jspf/scripts.jspf" %>
     </body>
 </html>

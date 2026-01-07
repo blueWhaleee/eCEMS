@@ -81,7 +81,7 @@ public class loginServlet extends HttpServlet {
             Student new_student = studentDAO.authenticateStudent(student);
             if (new_student != null) {
                 HttpSession session = request.getSession();
-                session.setAttribute("loggedUser", student);
+                session.setAttribute("loggedUser", new_student);
                 session.setAttribute("role", "student");
 
                 response.sendRedirect(request.getContextPath() + "/");

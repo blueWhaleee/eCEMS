@@ -1,54 +1,152 @@
-<%-- any content can be specified here e.g.: --%>
-<%@ page pageEncoding="UTF-8" %>
-<nav class="menu">
-    <div class="menu__logo">
-        <img src="${pageContext.request.contextPath}/assets/image/jpjpp_logo.png" alt="JPJPP Logo">
-        <p>eCEMS</p>
+<c:set var="picturePath" value="${pageContext.request.contextPath}/ProfilePictureServlet?studNumber=${sessionScope.loggedUser.stud_number}" />
+<style>
+    .sidebar-nav { width: 120px; min-width: 120px; background-color: #121026; }
+    .nav-link-custom { color: rgba(255,255,255,0.7); transition: all 0.2s; border-right: 4px solid transparent; }
+    .nav-link-custom:hover { color: #fff; }
+    .nav-link-custom.active { background: linear-gradient(90deg, rgba(115, 103, 240, 0) 0%, rgba(115, 103, 240, 0.3) 100%); border-right: 4px solid #7367F0; color: #fff; }
+    
+    /* Mobile offcanvas styling */
+    .mobile-nav-link { color: rgba(255,255,255,0.7); transition: all 0.2s; border-left: 4px solid transparent; }
+    .mobile-nav-link:hover { color: #fff; background-color: rgba(115, 103, 240, 0.1); }
+    .mobile-nav-link.active { background: linear-gradient(90deg, rgba(115, 103, 240, 0.3) 0%, rgba(115, 103, 240, 0) 100%); border-left: 4px solid #7367F0; color: #fff; }
+</style>
+
+<!-- Mobile Menu Toggle Button -->
+<button class="btn btn-dark d-lg-none position-fixed top-0 start-0 m-3 shadow-lg" 
+        type="button" 
+        data-bs-toggle="offcanvas" 
+        data-bs-target="#mobileNav" 
+        style="z-index: 1050;">
+    <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+    </svg>
+</button>
+
+<!-- Desktop Sidebar -->
+<nav class="sidebar-nav h-100 d-none d-lg-flex flex-column justify-content-between py-4 border-end border-secondary border-opacity-10">
+    
+    <div class="d-flex flex-column align-items-center mb-5">
+        <img src="${pageContext.request.contextPath}/assets/image/jpjpp_logo.png" 
+             alt="JPJPP Logo" class="img-fluid mb-1" style="height: 2.5rem;">
+        <p class="small text-white opacity-50 m-0 fw-lighter">eCEMS</p>
     </div>
 
-    <ul class="menu__button">
-        <li onclick="location.href='${pageContext.request.contextPath}/'" class="menu__button-item menu__button-active">
-            <svg width="29" height="29" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3.75 14.25H0.75L14.25 0.75L27.75 14.25H24.75" stroke="white" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M3.75 14.25V24.75C3.75 26.4069 5.09315 27.75 6.75 27.75H21.75C23.4069 27.75 24.75 26.4069 24.75 24.75V14.25"
-                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M9.75 27.75V18.75C9.75 17.0931 11.0931 15.75 12.75 15.75H15.75C17.4069 15.75 18.75 17.0931 18.75 18.75V27.75"
-                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <p>Home</p>
+    <ul class="nav nav-pills flex-column w-100 my-auto">
+        <li class="nav-item w-100">
+            <a href="${pageContext.request.contextPath}/" 
+               class="nav-link-custom d-flex flex-column align-items-center py-3 text-decoration-none <c:if test='${pageTitle == "Home"}'>active</c:if>">
+                <svg width="24" height="24" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-1">
+                    <path d="M3.75 14.25H0.75L14.25 0.75L27.75 14.25H24.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M3.75 14.25V24.75C3.75 26.4069 5.09315 27.75 6.75 27.75H21.75C23.4069 27.75 24.75 26.4069 24.75 24.75V14.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M9.75 27.75V18.75C9.75 17.0931 11.0931 15.75 12.75 15.75H15.75C17.4069 15.75 18.75 17.0931 18.75 18.75V27.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="small">Home</span>
+            </a>
         </li>
-        <li onclick="location.href='${pageContext.request.contextPath}/elections'" class="menu__button-item">
-            <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M17.6925 31.5H7.5C5.84315 31.5 4.5 30.1569 4.5 28.5V10.5C4.5 8.84315 5.84315 7.5 7.5 7.5H25.5C27.1569 7.5 28.5 8.84315 28.5 10.5V16.5"
-                    stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                <circle cx="27" cy="27" r="6" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <path d="M22.5 4.5V10.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <path d="M10.5 4.5V10.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <path d="M4.5 16.5H28.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <path d="M27 24.744V27L28.5 28.5" stroke="white" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-            <p>Elections</p>
+
+        <li class="nav-item w-100">
+            <a href="${pageContext.request.contextPath}/elections" 
+               class="nav-link-custom d-flex flex-column align-items-center py-3 text-decoration-none <c:if test='${pageTitle == "Elections"}'>active</c:if>">
+                <svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-1">
+                    <path d="M17.6925 31.5H7.5C5.84315 31.5 4.5 30.1569 4.5 28.5V10.5C4.5 8.84315 5.84315 7.5 7.5 7.5H25.5C27.1569 7.5 28.5 8.84315 28.5 10.5V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="27" cy="27" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M22.5 4.5V10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M10.5 4.5V10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M4.5 16.5H28.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M27 24.744V27L28.5 28.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="small">Elections</span>
+            </a>
         </li>
     </ul>
 
-    <div class="menu__profile">
-        <div class="menu__profile__image">
-            <img src="${pageContext.request.contextPath}/assets/image/profile_img.png" alt="Profile Image">
+    <div class="d-flex flex-column align-items-center px-2 gap-1 text-center">
+        <div class="rounded-circle bg-white overflow-hidden mb-2 shadow-sm" style="width: 2.8rem; height: 2.8rem;">
+            <img src="${picturePath}" alt="Profile" class="w-100 h-100 object-fit-cover">
         </div>
-        <p>${sessionScope.loggedUser.stud_number}</p>
-        <div class="menu__profile__role">
-            ${sessionScope.role}
+        <p class="small text-white m-0 fw-medium">${sessionScope.loggedUser.stud_number}</p>
+        <div class="badge rounded-pill px-3 py-1 mb-2 fw-normal" style="background-color: #211D46; color: #7367F0; font-size: 0.7rem;">
+            ${fn:toUpperCase(sessionScope.role)}
         </div>
-        <button onclick="location.href='${pageContext.request.contextPath}/logout'">Logout</button>
+        <button 
+            class="btn btn-outline-danger btn-sm border-0 opacity-75" 
+            onclick="location.href='${pageContext.request.contextPath}/logout'" 
+            style="font-size: 0.75rem;">
+                LOGOUT
+        </button>
     </div>
 
 </nav>
+
+<!-- Mobile Offcanvas Navigation -->
+<div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="mobileNav" style="background-color: #121026; width: 280px;">
+    <div class="offcanvas-header border-bottom border-secondary border-opacity-10 py-3">
+        <div class="d-flex align-items-center gap-2">
+            <img src="${pageContext.request.contextPath}/assets/image/jpjpp_logo.png" 
+                 alt="JPJPP Logo" style="height: 2rem;">
+            <span class="text-white fw-bold">eCEMS</span>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body p-0 d-flex flex-column">
+        
+        <!-- User Profile Section -->
+        <div class="p-4 border-bottom border-secondary border-opacity-10">
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-white overflow-hidden shadow-sm" style="width: 3rem; height: 3rem;">
+                    <img src="${picturePath}" alt="Profile" class="w-100 h-100 object-fit-cover">
+                </div>
+                <div class="flex-grow-1">
+                    <p class="text-white fw-medium mb-1">${sessionScope.loggedUser.stud_number}</p>
+                    <div class="badge rounded-pill px-3 py-1 fw-normal" style="background-color: #211D46; color: #7367F0; font-size: 0.7rem;">
+                        ${fn:toUpperCase(sessionScope.role)}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <ul class="nav nav-pills flex-column flex-grow-1 p-3">
+            <li class="nav-item w-100 mb-2">
+                <a href="${pageContext.request.contextPath}/" 
+                   class="mobile-nav-link d-flex align-items-center gap-3 py-3 px-3 text-decoration-none rounded <c:if test='${pageTitle == "Home"}'>active</c:if>">
+                    <svg width="24" height="24" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.75 14.25H0.75L14.25 0.75L27.75 14.25H24.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3.75 14.25V24.75C3.75 26.4069 5.09315 27.75 6.75 27.75H21.75C23.4069 27.75 24.75 26.4069 24.75 24.75V14.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9.75 27.75V18.75C9.75 17.0931 11.0931 15.75 12.75 15.75H15.75C17.4069 15.75 18.75 17.0931 18.75 18.75V27.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span class="fw-medium">Home</span>
+                </a>
+            </li>
+
+            <li class="nav-item w-100 mb-2">
+                <a href="${pageContext.request.contextPath}/elections" 
+                   class="mobile-nav-link d-flex align-items-center gap-3 py-3 px-3 text-decoration-none rounded <c:if test='${pageTitle == "Elections"}'>active</c:if>">
+                    <svg width="24" height="24" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.6925 31.5H7.5C5.84315 31.5 4.5 30.1569 4.5 28.5V10.5C4.5 8.84315 5.84315 7.5 7.5 7.5H25.5C27.1569 7.5 28.5 8.84315 28.5 10.5V16.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <circle cx="27" cy="27" r="6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M22.5 4.5V10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M10.5 4.5V10.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M4.5 16.5H28.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M27 24.744V27L28.5 28.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span class="fw-medium">Elections</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Logout Button -->
+        <div class="p-3 border-top border-secondary border-opacity-10">
+            <button 
+                class="btn btn-outline-danger w-100 border-2" 
+                onclick="location.href='${pageContext.request.contextPath}/logout'">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16" class="me-2">
+                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                </svg>
+                LOGOUT
+            </button>
+        </div>
+
+    </div>
+</div>

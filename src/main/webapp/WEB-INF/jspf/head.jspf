@@ -1,7 +1,9 @@
 
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <sql:setDataSource 
     var="myDatasource"
     driver="org.postgresql.Driver"
@@ -18,12 +20,13 @@
     <!-- Base path for all relative URLs -->
     <base href="${pageContext.request.contextPath}/">
   
-    <!-- eCEMS Core CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/index.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/home.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/nav.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/post.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/elections.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/create_elections.css" type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/create_elections_create.css" type="text/css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" type="text/css">
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .card-anim { transition: all 0.3s; }
+        .card-anim:hover { transform: scale(1.015); filter: drop-shadow(0 5px 10px #3a57e81f); }
+    </style>
 </head>
