@@ -10,7 +10,7 @@
     <%@ include file="/WEB-INF/jspf/head.jspf" %>
     <c:set var="pageTitle" value="Home" />
     
-    <body>
+    <body style="background-color: #121026">
         <div class="d-flex vh-100 overflow-hidden">
 
             <div class="h-100">
@@ -19,7 +19,7 @@
 
             <main class="d-flex flex-grow-1 overflow-hidden">
                 
-                <div class="flex-grow-1 rounded-start-4 p-4 p-xl-5 overflow-auto no-scrollbar d-flex flex-column gap-4" style="background-color: #F3F9FE;">
+                <div class="flex-grow-1 rounded-start-5 p-4 p-xl-5 overflow-auto no-scrollbar d-flex flex-column gap-4" style="background-color: #F3F9FE;">
                     <h1 class="h4 fw-bold mb-0">Home</h1>
 
                     <div class="rounded-4 px-5 py-4 text-white position-relative shadow-sm" style="background: linear-gradient(90deg, #121026 0%, #7065E9 100%);">
@@ -68,7 +68,7 @@
                             <h3 class="h5 fw-bold text-dark mb-0">View Elections</h3>
                             <p class="small text-dark opacity-75 mb-0">Vote in elections or register as candidate</p>
                         </div>
-                        <button class="btn btn-outline-primary bg-white text-primary rounded-pill px-4 shadow-sm d-flex justify-content-between align-items-center gap-2" onclick="location.href='elections.html'">
+                        <button class="card-anim btn btn-outline-primary bg-white text-primary rounded-pill px-4 shadow-sm d-flex justify-content-between align-items-center gap-2" onclick="location.href='elections.html'">
                             Elections
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M4.16675 9.99992H15.8334" stroke="#7367F0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

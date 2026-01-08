@@ -9,7 +9,7 @@
 <html>
 
     <%@ include file="/WEB-INF/jspf/head.jspf" %>
-    <c:set var="pageTitle" value="Home" />
+    <c:set var="pageTitle" value="Elections" />
 
     <sql:query dataSource="${myDatasource}" var="stats">
         SELECT 
@@ -49,7 +49,7 @@
 
 
     
-    <body>
+    <body style="background-color: #121026">
         <div class="d-flex vh-100 overflow-hidden">
 
             <div class="h-100">
@@ -58,7 +58,7 @@
 
             <main class="d-flex flex-grow-1 overflow-hidden">
                 
-                <div class="flex-grow-1 rounded-start-5 p-4 p-xl-5 overflow-auto no-scrollbar d-flex flex-column gap-4" style="background-color: #F3F9FE;">
+                <div class="flex-grow-1 rounded-start-5 rounded-start-5 p-4 p-xl-5 overflow-auto no-scrollbar d-flex flex-column gap-4" style="background-color: #F3F9FE;">
                     <h1 class="h4 fw-bold mb-0">Elections</h1>
 
                     <%-- Statistics START --%>
@@ -72,7 +72,7 @@
                                             <h3 class="h6 text-white fw-semibold mb-0">Upcoming</h3>
                                             <p class="small text-white opacity-75 mb-0">Elections</p>
                                         </div>
-                                        <div class="display-4 fw-bold text-white">16</div>
+                                        <div class="display-4 fw-bold text-white">${counts.upcoming_count != null ? counts.upcoming_count : 0}</div>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                             <h3 class="h6 text-white fw-semibold mb-0">Active</h3>
                                             <p class="small text-white opacity-75 mb-0">Elections</p>
                                         </div>
-                                        <div class="display-4 fw-bold text-white">3</div>
+                                        <div class="display-4 fw-bold text-white">${counts.active_count != null ? counts.active_count : 0}</div>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                                             <h3 class="h6 fw-semibold mb-0" style="color: #1e1b4b;">Closed</h3>
                                             <p class="small mb-0" style="color: #5b4fc9;">Elections</p>
                                         </div>
-                                        <div class="display-4 fw-bold" style="color: #1e1b4b;">10</div>
+                                        <div class="display-4 fw-bold" style="color: #1e1b4b;">${counts.closed_count != null ? counts.closed_count : 0}</div>
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +182,7 @@
                                 data-voted="${election.vote_status}"
                             >
                                 <div class="card border-0 shadow-sm h-100 card-anim" style="background-color: #FFF; border-radius: 1rem; cursor: pointer; transition: transform 0.2s;"
-                                    onclick="location.href='${pageContext.request.contextPath}/elections/${election.election_id}'">
+                                    onclick="location.href='${pageContext.request.contextPath}/elections/page/${election.election_id}'">
                                     <div class="card-body p-4 d-flex flex-column justify-content-between">
                                         <!-- Status Badge -->
                                         <c:choose>
