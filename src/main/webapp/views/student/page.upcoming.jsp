@@ -19,6 +19,17 @@
         <sql:param value="${election.election_id}" />
     </sql:query>
     <c:set var="loc" value="${locationInfo.rows[0]}" />
+
+    <sql:query dataSource="${myDatasource}" var="registeredCandidate">
+        SELECT COUNT(CANDIDATE_ID) AS COUNT
+        FROM CANDIDATES
+        WHERE ELECTION_ID = ?
+        AND STUDENT_ID = ?
+        AND STATUS = 'pending'
+        <sql:param value="${election.election_id}" />
+        <sql:param value="${loggedUser.stud_id}" />
+    </sql:query>
+    <c:set var="isCandidate" value="${registeredCandidate.rows[0]}" />
     
     <body style="background-color: #121026">
         <div class="d-flex vh-100 overflow-hidden">
@@ -84,7 +95,7 @@
                     </div>
 
                     <c:choose>
-                        <c:when test="${election.candidacy_open}">
+                        <c:when test="${election.candidacy_open && isCandidate.count == 0}">
                             <button type="button" class="mx-auto px-5 btn rounded-pill bg-white border border-1 card-anim d-flex flex-row gap-2 justify-content-center align-items-center text-dark py-2" data-bs-toggle="modal" data-bs-target="#registerCandidateModal">
                                 <svg width="20" height="20" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0_525_1117)">
@@ -167,12 +178,23 @@
                                 </div>
                             </div>
                         </div>
+                        <c:if test="${not empty error}">
+                            <div class="col-12">
+                                <div class="alert alert-danger alert-dismissible fade show rounded-4" role="alert">
+                                    <strong>Error!</strong> ${error}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
 
             </main>
 
-            <form method="POST" class="modal modal-lg fade" id="registerCandidateModal" tabindex="-1" aria-labelledby="registerCandidate" aria-hidden="true">
+            <form method="POST" enctype="multipart/form-data" class="modal modal-lg fade" id="registerCandidateModal" tabindex="-1" aria-labelledby="registerCandidate" aria-hidden="true">
+                <input type="hidden" name="action" value="register_candidate" />
+                <input type="hidden" name="election_id" value="${election.election_id}" />
+                <input type="hidden" name="stud_id" value="${sessionScope.loggedUser.stud_id}" />
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -209,20 +231,20 @@
                                     <div class="row g-3">
                                         <div class="col-12">
                                             <label class="mb-1"><small>Manifesto</small></label>
-                                            <textarea id="manifesto" class="form-control bg-white" rows="2" maxlength="1000"></textarea>
+                                            <textarea id="manifesto" name="manifesto" class="form-control bg-white" rows="2" maxlength="1000"></textarea>
                                             <small class="text-secondary"><span id="charCount">0</span> / 1000 </small>
                                         </div>
                                         <div class="col-12">
                                             <label class="mb-1"><small>Slogan</small></label>
-                                            <input type="text" class="form-control bg-white"/>
+                                            <input type="text" name="slogan" class="form-control bg-white"/>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="mb-1"><small>Campaign Profile Photo</small></label>
-                                            <input type="file" class="form-control bg-white"/>
+                                            <input type="file" name="photo" class="form-control bg-white" accept="image/*"/>
                                         </div>
                                         <div class="col-md-6">
                                             <label class="mb-1"><small>Campaign Banner</small></label>
-                                            <input type="file" class="form-control bg-white"/>
+                                            <input type="file" name="banner" class="form-control bg-white" accept="image/*"/>
                                         </div>
                                     <div>
                                 </div>
@@ -230,7 +252,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Submit Registration</button>
+                            <button type="submit" class="btn btn-primary">Submit Registration</button>
                         </div>
                     </div>
                 </div>
@@ -240,6 +262,8 @@
 
         <%-- Javascripts  --%>
         <%@ include file="/WEB-INF/jspf/scripts.jspf" %>
+
+
         <script>
             $(document).ready(function () {
                 const $textarea = $('#manifesto');

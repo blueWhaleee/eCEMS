@@ -18,11 +18,11 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
  * @author NAFIS
  */
 public class S3Connection {
-    private static final String S3_ENDPOINT = "https://hsnmkvymudhpkbobwhtc.storage.supabase.co/storage/v1/s3";  // For client operations (upload/download)
-    private static final String PUBLIC_BASE_URL = "https://hsnmkvymudhpkbobwhtc.storage.supabase.co/storage/v1/object/public/";  // For serving public files
+    private static final String S3_ENDPOINT = "https://oiuusqzyuhorissjgjez.storage.supabase.co/storage/v1/s3";  // For client operations (upload/download)
+    private static final String PUBLIC_BASE_URL = "https://oiuusqzyuhorissjgjez.storage.supabase.co/storage/v1/object/public/";  // For serving public files
 
-    private static final String ACCESS_KEY = "4b842fe3695317546abfe32b4063bbfa";
-    private static final String SECRET_KEY = "103bf94859fa99d1d188b9078ead42cc75d1cb65a2efdae079a25554e7bd7818";
+    private static final String ACCESS_KEY = "4a39a9d46fff702d332b0057a67ee190";
+    private static final String SECRET_KEY = "28f6c884faa231ac9c24e68012effd6422ec97379e479f757847baa292c7e7a9";
 
     private static final Region REGION = Region.AP_NORTHEAST_1; 
     private static S3Client client;
@@ -55,8 +55,8 @@ public class S3Connection {
     
     public static boolean testUpload() {
         S3Client s3 = getClient();
-        String bucketName = "ehas";
-        String key = "test/test-upload-success.txt";
+        String bucketName = "ecems";
+        String key = "banner/test-upload-success.txt";
         String content = "Supabase S3 upload test successful! Time: " + System.currentTimeMillis();
 
         try {
