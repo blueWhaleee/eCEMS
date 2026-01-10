@@ -9,7 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ecems.dao.StaffDAO;
 import com.ecems.dao.StudentDAO;
+import com.ecems.model.Staff;
 import com.ecems.model.Student;
 import com.ecems.util.passwordHash;
 
@@ -28,12 +30,14 @@ import jakarta.servlet.http.HttpSession;
 public class loginServlet extends HttpServlet {
 
     private StudentDAO studentDAO;
+    private StaffDAO staffDAO;
 
     @Override
     public void init() throws ServletException {
        
     	// Initialize DAO object. Called once when servlet loads. 
     	studentDAO = new StudentDAO();
+        staffDAO = new StaffDAO();
     }
 
     /**
@@ -64,30 +68,51 @@ public class loginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         List<String> errors = new ArrayList<>();
-        
-        String stud_number = request.getParameter("stud_number");
+        System.out.println(request.getParameterMap());
+        String is_staff = request.getParameter("is_staff");
+        String number = request.getParameter("number");
         String password = request.getParameter("password");
-
-        if (stud_number == null || stud_number.isEmpty()) 
+        
+        if (number == null || number.isEmpty()) 
             errors.add("Student number cannot be empty");
         if (password == null || password.isEmpty()) 
             errors.add("Password cannot be empty");
-
-        if (errors.isEmpty()) {
-            Student student = new Student();
-            student.setStud_number(stud_number);
-            student.setPassword(passwordHash.doHashing(password));
-            
-            Student new_student = studentDAO.authenticateStudent(student);
-            if (new_student != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("loggedUser", new_student);
-                session.setAttribute("role", "student");
-
-                response.sendRedirect(request.getContextPath() + "/");
-                return;
-            } else {
-                errors.add("Wrong student number or password");
+        
+        if (is_staff == null) {
+            if (errors.isEmpty()) {
+                Student student = new Student();
+                student.setStud_number(number);
+                student.setPassword(passwordHash.doHashing(password));
+                
+                Student new_student = studentDAO.authenticateStudent(student);
+                if (new_student != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loggedUser", new_student);
+                    session.setAttribute("role", "student");
+    
+                    response.sendRedirect(request.getContextPath() + "/");
+                    return;
+                } else {
+                    errors.add("Wrong student number or password");
+                }
+            }
+        } else {
+            if (errors.isEmpty()) {
+                Staff staff = new Staff();
+                staff.setStaff_number(number);
+                staff.setPassword(passwordHash.doHashing(password));
+                
+                Staff new_staff = staffDAO.authenticateStaff(staff);
+                if (new_staff != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("loggedUser", new_staff);
+                    session.setAttribute("role", "staff");
+    
+                    response.sendRedirect(request.getContextPath() + "/");
+                    return;
+                } else {
+                    errors.add("Wrong staff number or password");
+                }
             }
         }
 

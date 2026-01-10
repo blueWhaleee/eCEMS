@@ -22,6 +22,15 @@
   
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/tempus-dominus.min.css" type="text/css">
+
+    <!-- Datatable CSS -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/dataTables.dataTables.min.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/datatable-ecems.css" type="text/css">
+
+    <%-- Font Awesome --%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/all.min.css" type="text/css">
+
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

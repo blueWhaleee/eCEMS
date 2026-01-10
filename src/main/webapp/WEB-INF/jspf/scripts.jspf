@@ -2,8 +2,19 @@
 <%-- jQuery --%>
 <script src="${pageContext.request.contextPath}/assets/js/jquery-3.7.1.min.js"></script>
 
+<%-- Moment JS --%>
+<script src="${pageContext.request.contextPath}/assets/js/moment.js"></script>
+
 <%-- Bootstrap JS --%>
 <script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/tempus-dominus.min.js"></script>
+
+<%-- Datatable JS --%>
+<script src="${pageContext.request.contextPath}/assets/js/dataTables.min.js"></script>
 
 <%-- eCEMS JS --%>
 <script src="${pageContext.request.contextPath}/assets/js/ecems.js"></script>
+
+<%-- Font Awesome --%>
+<script src="${pageContext.request.contextPath}/assets/js/all.min.js"></script>

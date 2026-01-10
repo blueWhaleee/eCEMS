@@ -53,7 +53,7 @@
         <div class="d-flex vh-100 overflow-hidden">
 
             <div class="h-100">
-                <%@ include file="/WEB-INF/jspf/nav.jspf" %>
+                <%@ include file="/WEB-INF/jspf/nav_stud.jspf" %>
             </div>
 
             <main class="d-flex flex-grow-1 overflow-hidden">

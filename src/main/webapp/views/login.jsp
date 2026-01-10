@@ -24,16 +24,16 @@
 
                     <form class="w-100" action="${pageContext.request.contextPath}/login" method="POST">
                         <div class="mb-3">
-                            <label for="stud_number" class="form-label small fw-semibold">Student/Staff No.</label>
-                            <input name="stud_number" type="text" class="form-control form-control-lg fs-6" placeholder="Enter your Student No." required>
+                            <label for="number" class="form-label small fw-semibold">Student/Staff No.</label>
+                            <input name="number" type="text" class="form-control form-control-lg fs-6" placeholder="Enter your Student No." required>
                         </div>
                         <div class="mb-4">
                             <label for="password" class="form-label small fw-semibold">Password</label>
                             <input name="password" type="password" class="form-control form-control-lg fs-6" placeholder="············" required>
                         </div>
                         <div class="form-check form-switch mb-3">
-                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                            <label class="form-check-label" for="flexSwitchCheckDefault">Login as Staff?</label>
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="is_staff">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Login as Staff</label>
                         </div>
                         
                         <button class="btn btn-primary w-100 py-2 shadow-sm mb-3" type="submit">Sign In</button>
@@ -59,6 +59,23 @@
                     </c:forEach>
                 </div>
             </c:if>
-            </main>
+        </main>
     </body>
+
+    <%-- Javascripts  --%>
+    <%@ include file="/WEB-INF/jspf/scripts.jspf" %>
+
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', '.btn-close', function() {
+                var $alert = $(this).closest('.alert');
+                
+                $alert.removeClass('show');
+                
+                setTimeout(function() {
+                    $alert.remove();
+                }, 150);
+            });
+        });
+    </script>
 </html>

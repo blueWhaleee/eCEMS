@@ -1,0 +1,109 @@
+/* DATATABLE */
+.datatable-container {
+    width: 100%;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+
+}
+
+.header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 1.5rem;
+    gap: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.show-entries {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.show-entries select {
+    padding: 5px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-box input {
+    padding: 6px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 250px;
+}
+
+.create-btn {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.create-btn:hover {
+    background-color: #563d7c;
+}
+
+.status {
+    padding: 0.2rem 0.75rem;
+    border-radius: 5px;
+    font-size: 0.85rem;
+}
+
+/* Action icons */
+.action-link {
+    color: #6f42c1;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.action-link:hover {
+    text-decoration: underline;
+}
+
+/* Avatar */
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* DataTables overrides for better alignment */
+table.dataTable thead th {
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+table.dataTable tbody td {
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+
+.dt-container .bottom {
+    margin: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}

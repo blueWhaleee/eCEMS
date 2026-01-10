@@ -55,6 +55,9 @@ public class authFilter implements Filter {
             if ("student".equals(role) && (path.equals("/") || path.equals("/index"))) {
                 request.getRequestDispatcher("/views/student/index.jsp").forward(request, response);
                 return;
+            } else if ("staff".equals(role) && (path.equals("/") || path.equals("/index"))) {
+                request.getRequestDispatcher("/views/staff/index.jsp").forward(request, response);
+                return;
             }
         }
         
@@ -71,7 +74,7 @@ public class authFilter implements Filter {
                 path.equals("/logout") ||
 
                 // Partials
-                path.startsWith("/views/partials/")
+                path.endsWith(".jspf")
             ) {
             fc.doFilter(request, response);
             return;
