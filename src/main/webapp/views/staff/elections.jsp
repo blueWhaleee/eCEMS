@@ -14,9 +14,9 @@
     <sql:query dataSource="${myDatasource}" var="stats">
         SELECT 
             COUNT(*) AS ALL_COUNT,
-            COUNT(*) FILTER (WHERE STATUS = 'UPCOMING') AS UPCOMING_COUNT,
-            COUNT(*) FILTER (WHERE STATUS = 'ACTIVE') AS ACTIVE_COUNT,
-            COUNT(*) FILTER (WHERE STATUS = 'CLOSED') AS CLOSED_COUNT
+            COUNT(*) FILTER (WHERE STATUS = 'upcoming') AS UPCOMING_COUNT,
+            COUNT(*) FILTER (WHERE STATUS = 'active') AS ACTIVE_COUNT,
+            COUNT(*) FILTER (WHERE STATUS = 'closed') AS CLOSED_COUNT
         FROM ELECTIONS
         WHERE (CAMPUS_ID IS NULL OR CAMPUS_ID = ?)
         <sql:param value="${loggedUser.campus_id}" />
@@ -30,6 +30,7 @@
             STATUS,
             STAFF_NUMBER,
             FULL_NAME,
+            PROFILE_PATH,
             CREATED_AT
         FROM ELECTIONS E
         LEFT JOIN STAFFS S ON E.CREATED_BY = S.STAFF_ID
@@ -75,7 +76,7 @@
                                             <h3 class="h6 text-white fw-semibold mb-0">Upcoming</h3>
                                             <p class="small text-white opacity-75 mb-0">Elections</p>
                                         </div>
-                                        <div class="display-4 fw-bold text-white">${counts.upcoming_count != null ? counts.upcoming_count : 0}</div>
+                                        <div class="display-4 fw-bold text-white">${counts.UPCOMING_COUNT != null ? counts.UPCOMING_COUNT : 0}</div>
                                     </div>
                                 </div>
                             </div>
@@ -90,7 +91,7 @@
                                             <h3 class="h6 text-white fw-semibold mb-0">Active</h3>
                                             <p class="small text-white opacity-75 mb-0">Elections</p>
                                         </div>
-                                        <div class="display-4 fw-bold text-white">${counts.active_count != null ? counts.active_count : 0}</div>
+                                        <div class="display-4 fw-bold text-white">${counts.ACTIVE_COUNT != null ? counts.ACTIVE_COUNT : 0}</div>
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +106,7 @@
                                             <h3 class="h6 fw-semibold mb-0" style="color: #1e1b4b;">Closed</h3>
                                             <p class="small mb-0" style="color: #5b4fc9;">Elections</p>
                                         </div>
-                                        <div class="display-4 fw-bold" style="color: #1e1b4b;">${counts.closed_count != null ? counts.closed_count : 0}</div>
+                                        <div class="display-4 fw-bold" style="color: #1e1b4b;">${counts.CLOSED_COUNT != null ? counts.CLOSED_COUNT : 0}</div>
                                     </div>
                                 </div>
                             </div>
@@ -174,12 +175,12 @@
                                                 </c:otherwise>
                                             </c:choose>  
                                         </td>
-                                        <td><img src="https://i.pravatar.cc/32?img=1" alt="Staff Profile" class="avatar">${election.full_name}</td>
+                                        <td><img src="${election.profile_path}" onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=No+Image';" alt="Staff Profile" class="avatar">${election.full_name}</td>
                                         <td><fmt:formatDate value="${election.created_at}" pattern="dd MMM yyyy, h:mm a"/></td>
                                         <td>
-                                            <a href="${pageContext.request.contextPath}/elections/page/${election.election_id}" class="action-link d-flex align-items-center">
+                                            <a href="${pageContext.request.contextPath}/elections/page/${election.election_id}" class="action-link d-flex align-items-center gap-2">
                                                 <c:choose>
-                                                    <c:when test="${election.status == 'closed' || election.status == 'cancelled'}">
+                                                    <c:when test="${election.status == 'closed' || election.status == 'cancelled' || election.status == 'active'}">
                                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                             <circle cx="9.99992" cy="10.0002" r="1.66667" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                                             <path d="M18.3334 9.99984C16.1109 13.889 13.3334 15.8332 10.0001 15.8332C6.66675 15.8332 3.88925 13.889 1.66675 9.99984C3.88925 6.11067 6.66675 4.1665 10.0001 4.1665C13.3334 4.1665 16.1109 6.11067 18.3334 9.99984" stroke="#7367F0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

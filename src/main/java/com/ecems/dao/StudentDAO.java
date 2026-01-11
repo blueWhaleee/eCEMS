@@ -23,7 +23,7 @@ public class StudentDAO {
     private ResultSet rs;
 
     private static final String INSERT_STUDENT_SQL =
-        "INSERT INTO STUDENTS (full_name, stud_number, email, password, is_active, campus_id, faculty_id) VALUES (?, ?, ?, ?, TRUE, ?, ?)";
+        "INSERT INTO STUDENTS (full_name, stud_number, email, password, is_active, campus_id, faculty_id, profile_path) VALUES (?, ?, ?, ?, TRUE, ?, ?, ?)";
 
     private static final String GET_STUDENT_BY_STUDNUM_PASSWORD =
         "SELECT * FROM STUDENTS WHERE STUD_NUMBER = ? AND PASSWORD = ?";
@@ -43,6 +43,7 @@ public class StudentDAO {
             pstmt.setString(4, student.getPassword());
             pstmt.setInt(5, student.getCampus_id());
             pstmt.setInt(6, student.getFaculty_id());
+            pstmt.setString(7, student.getProfile_path());
             pstmt.executeUpdate();
 
             pstmt.close();
@@ -104,7 +105,8 @@ public class StudentDAO {
         String password = rs.getString("password");
         boolean is_active = rs.getBoolean("is_active");
         LocalDateTime created_at = rs.getTimestamp("created_at").toLocalDateTime();
+        String profile_path = rs.getString("profile_path");
 
-        return new Student(stud_id, campus_id, faculty_id, full_name, stud_number, email, password, is_active, created_at);
+        return new Student(stud_id, campus_id, faculty_id, full_name, stud_number, email, password, is_active, created_at, profile_path);
     }
 }

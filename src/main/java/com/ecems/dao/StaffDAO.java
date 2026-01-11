@@ -90,8 +90,9 @@ public class StaffDAO {
         String staff_number = rs.getString("staff_number");
         String password = rs.getString("password");
         String full_name = rs.getString("full_name");
+        String profile_path = rs.getString("profile_path");
 
-        return new Staff(staff_id, campus_id, staff_number, password, full_name);
+        return new Staff(staff_id, campus_id, staff_number, password, full_name, profile_path);
     }
 
 }

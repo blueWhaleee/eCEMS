@@ -101,7 +101,7 @@
                                         <div class="row g-3">
                                             <div class="col-md-6">
                                                 <label class="mb-1"><small>Session</small></label>
-                                                <input type="text" name="session" class="form-control" placeholder="2025/2026" required/>
+                                                <input type="text" name="session" class="form-control" required/>
                                             </div>
                                             
                                             <div class="col-md-6">
@@ -160,7 +160,7 @@
                                     <p class="text-dark m-0">Created By</p>
                                     <div class="d-flex align-items-center justify-content-center gap-3 h-100 px-4">
                                         <div class="rounded-circle bg-white overflow-hidden mb-2 shadow-sm" style="width: 2.8rem; height: 2.8rem;">
-                                            <img src="" alt="Profile" class="w-100 h-100 object-fit-cover bg-primary">
+                                            <img src="${sessionScope.loggedUser.profile_path}" alt="Profile" onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=No+Image';" class="w-100 h-100 object-fit-cover">
                                         </div>
                                         <div class="me-auto">
                                             <h3 class="h6 text-dark fw-semibold mb-0">${sessionScope.loggedUser.full_name}</h3>

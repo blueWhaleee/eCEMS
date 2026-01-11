@@ -41,6 +41,7 @@
         LEFT JOIN public.votes v ON c.candidate_id = v.candidate_id AND v.student_id = ?
         WHERE (e.campus_id IS NULL OR e.campus_id = ?)
         AND (e.faculty_id IS NULL OR e.faculty_id = ?)
+        AND e.STATUS != 'cancelled'
         ORDER BY e.election_id, e.created_at DESC
         <sql:param value="${loggedUser.stud_id}" />
         <sql:param value="${loggedUser.campus_id}" />

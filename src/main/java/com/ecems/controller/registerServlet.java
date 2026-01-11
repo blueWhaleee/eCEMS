@@ -101,6 +101,7 @@ public class registerServlet extends HttpServlet {
             student.setPassword(passwordHash.doHashing(password));
             student.setCampus_id(campus_id);
             student.setFaculty_id(faculty_id);
+            student.setProfile_path(passwordHash.picturePath(stud_number));
 
             if (studentDAO.createStudent(student) != null)
                 response.sendRedirect(request.getContextPath() + "/login");
@@ -110,6 +111,5 @@ public class registerServlet extends HttpServlet {
         }
 
     }
-
 
 }

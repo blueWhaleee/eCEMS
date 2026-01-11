@@ -83,10 +83,11 @@ public class electionPageServlet extends HttpServlet {
                 case "staff":
                     switch (status.toLowerCase()) {
                         case "upcoming":
-                        case "active":
                             view = "/views/staff/election.modify.jsp";
                             break;
+                        case "active":
                         case "closed":
+                        case "cancelled":
                             view = "/views/staff/election.view.jsp";
                             break;
                     }
@@ -138,6 +139,12 @@ public class electionPageServlet extends HttpServlet {
                 case "register_candidate":
                     registerCandidate(request, response);
                     break;
+                case "approve_candidate":
+                    updateCandidate(request, response, "approved");
+                    break;
+                case "reject_candidate":
+                    updateCandidate(request, response, "rejected");
+                    break;
                 case "update_election":
                     updateElection(request, response);
                     break;
@@ -146,6 +153,9 @@ public class electionPageServlet extends HttpServlet {
                     break;
                 case "cancel_election":
                     cancelElection(request, response);
+                    break;
+                case "close_election":
+                    closeElection(request, response);
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -278,6 +288,23 @@ public class electionPageServlet extends HttpServlet {
         request.getRequestDispatcher("/views/student/election.upcoming.jsp").forward(request, response);
     }
 
+    private void updateCandidate(HttpServletRequest request, HttpServletResponse response, String status)
+            throws ServletException, IOException {
+
+            int election_id = Integer.parseInt(request.getParameter("election_id"));
+            int candidate_id = Integer.parseInt(request.getParameter("candidate_id"));
+
+            if (candidateDAO.updateCandidateStatus(candidate_id, status)) {
+                response.sendRedirect(request.getContextPath() + "/elections/page/" + election_id);
+                return;
+            }
+
+            Election updated_election = electionDAO.getElectionByID(election_id);
+            request.setAttribute("election", updated_election);
+            request.setAttribute("error", "Failed to update the candidate");
+            request.getRequestDispatcher("/views/staff/election.modify.jsp").forward(request, response);
+    }
+
     // Update election only for upcoming status
     private void updateElection(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
@@ -382,6 +409,23 @@ public class electionPageServlet extends HttpServlet {
             Election updated_election = electionDAO.getElectionByID(election_id);
             request.setAttribute("election", updated_election);
             request.setAttribute("error", "Failed to cancel the election");
+            request.getRequestDispatcher("/views/staff/election.modify.jsp").forward(request, response);
+    }
+
+    private void closeElection(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+            int election_id = Integer.parseInt(request.getParameter("election_id"));
+            String status = "closed";
+
+            if (electionDAO.updateElectionStatus(election_id, status) != null) {
+                response.sendRedirect(request.getContextPath() + "/elections/page/" + election_id);
+                return;
+            }
+
+            Election updated_election = electionDAO.getElectionByID(election_id);
+            request.setAttribute("election", updated_election);
+            request.setAttribute("error", "Failed to close the election");
             request.getRequestDispatcher("/views/staff/election.modify.jsp").forward(request, response);
     }
 }

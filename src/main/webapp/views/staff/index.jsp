@@ -40,7 +40,12 @@
                                             <h3 class="h6 text-white fw-semibold mb-0">Students</h3>
                                             <p class="small text-white opacity-75 mb-0">registered</p>
                                         </div>
-                                        <div class="display-4 fw-bold text-white">${counts.upcoming_count != null ? counts.upcoming_count : 0}</div>
+                                        <sql:query dataSource="${myDatasource}" var="statStud">
+                                            SELECT COUNT(*) AS COUNT FROM STUDENTS WHERE (CAMPUS_ID IS NULL OR CAMPUS_ID = ?)
+                                            <sql:param value="${loggedUser.campus_id}" />
+                                        </sql:query>
+                                        <c:set var="stud" value="${statStud.rows[0]}" />
+                                        <div class="display-4 fw-bold text-white">${stud.count != null ? stud.count : 0}</div>
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +60,12 @@
                                             <h3 class="h6 text-white fw-semibold mb-0">Staff</h3>
                                             <p class="small text-white opacity-75 mb-0">registered</p>
                                         </div>
-                                        <div class="display-4 fw-bold text-white">${counts.active_count != null ? counts.active_count : 0}</div>
+                                        <sql:query dataSource="${myDatasource}" var="statStaff">
+                                            SELECT COUNT(*) AS COUNT FROM STAFFS WHERE (CAMPUS_ID IS NULL OR CAMPUS_ID = ?)
+                                            <sql:param value="${loggedUser.campus_id}" />
+                                        </sql:query>
+                                        <c:set var="staff" value="${statStaff.rows[0]}" />
+                                        <div class="display-4 fw-bold text-white">${staff.count != null ? staff.count : 0}</div>
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +80,12 @@
                                             <h3 class="h6 fw-semibold mb-0" style="color: #1e1b4b;">Elections</h3>
                                             <p class="small mb-0" style="color: #5b4fc9;">created</p>
                                         </div>
-                                        <div class="display-4 fw-bold" style="color: #1e1b4b;">${counts.closed_count != null ? counts.closed_count : 0}</div>
+                                        <sql:query dataSource="${myDatasource}" var="statElect">
+                                            SELECT COUNT(*) AS COUNT FROM ELECTIONS WHERE (CAMPUS_ID IS NULL OR CAMPUS_ID = ?)
+                                            <sql:param value="${loggedUser.campus_id}" />
+                                        </sql:query>
+                                        <c:set var="election" value="${statElect.rows[0]}" />
+                                        <div class="display-4 fw-bold" style="color: #1e1b4b;">${election.count != null ? election.count : 0}</div>
                                     </div>
                                 </div>
                             </div>
@@ -95,16 +110,6 @@
                                         <td class="py-2 text-secondary">2025148595</td>
                                         <td class="py-2 text-end pe-4 text-secondary rounded-end-5">10, Jan 2020 20:07</td>
                                     </tr>
-                                    <tr>
-                                        <td class="py-2 ps-4 text-secondary fw-normal rounded-start-5">Jawatankuasa Perwakilan Kolej UiTM Shah Alam</td>
-                                        <td class="py-2 text-secondary">2025148599</td>
-                                        <td class="py-2 text-end pe-4 text-secondary rounded-end-5">11, Jan 2020 10:16</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2 ps-4 text-secondary fw-normal rounded-start-5">Jawatankuasa Perwakilan Kolej UiTM Shah Alam</td>
-                                        <td class="py-2 text-secondary">2025148333</td>
-                                        <td class="py-2 text-end pe-4 text-secondary rounded-end-5">11, Jan 2020 10:16</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -117,7 +122,8 @@
                                     <h3 class="h5 fw-bold text-dark mb-2">View Elections</h3>
                                     <p class="small text-dark opacity-75 mb-0 lh-1">Vote in elections or register as candidate</p>
                                 </div>
-                                <button class="card-anim btn btn-outline-primary bg-white text-primary rounded-pill px-4 shadow-sm d-flex justify-content-between align-items-center gap-2" onclick="location.href='elections.html'">
+                                <button class="card-anim btn btn-outline-primary bg-white text-primary rounded-pill px-4 shadow-sm d-flex justify-content-between align-items-center gap-2" 
+                                        onclick="location.href='${pageContext.request.contextPath}/elections'">
                                     Elections
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M4.16675 9.99992H15.8334" stroke="#7367F0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -133,7 +139,8 @@
                                     <h3 class="h5 fw-bold text-dark mb-2">Create Elections</h3>
                                     <p class="small text-dark opacity-75 mb-0 lh-1">Create a new campus-wide or faculty-specific election</p>
                                 </div>
-                                <button class="card-anim btn btn-outline-primary bg-white text-primary rounded-pill px-4 shadow-sm d-flex justify-content-between align-items-center gap-2" onclick="location.href='elections.html'">
+                                <button class="card-anim btn btn-outline-primary bg-white text-primary rounded-pill px-4 shadow-sm d-flex justify-content-between align-items-center gap-2" 
+                                        onclick="location.href='${pageContext.request.contextPath}/elections/create'">
                                     Create
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M4.16675 9.99992H15.8334" stroke="#7367F0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

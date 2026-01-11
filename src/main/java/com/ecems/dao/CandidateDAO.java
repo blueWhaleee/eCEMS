@@ -1,6 +1,7 @@
 package com.ecems.dao;
 
 import com.ecems.model.Candidate;
+import com.ecems.model.Election;
 import com.ecems.util.DBConnection;
 
 import java.sql.Connection;
@@ -25,9 +26,13 @@ public class CandidateDAO {
         "INSERT INTO CANDIDATES " +
         "(MANIFESTO, PHOTO_URL, BANNER_URL, SLOGAN, ELECTION_ID, STUDENT_ID) " +
         "VALUES (?, ?, ?, ?, ?, ?)";
+    
+    private static final String CHANGE_CANDIDATE_STATUS = 
+        "UPDATE CANDIDATES SET STATUS = ? WHERE CANDIDATE_ID = ? ";
 
     private static final String GET_CANDIDATES_BY_ELECTIONID =
         "SELECT * FROM CANDIDATES WHERE STATUS = 'approved' AND ELECTION_ID = ? ";
+
 
     public boolean createCandidate(Candidate candidate) {
         try {
@@ -47,6 +52,26 @@ public class CandidateDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } 
+        return false;
+    }
+
+    public boolean updateCandidateStatus(int candidate_id, String status) {
+        try {
+            conn = DBConnection.createConnection();
+            pstmt = conn.prepareStatement(CHANGE_CANDIDATE_STATUS);
+
+            pstmt.setString(1, status);
+            pstmt.setInt(2, candidate_id);
+            int rowAffected = pstmt.executeUpdate();
+            
+            pstmt.close();
+            conn.close();
+
+            return rowAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

@@ -150,15 +150,20 @@
                             </div>
                         </div>
                         <div class="col-12">
+                            <sql:query var="staff" dataSource="${myDatasource}">
+                                SELECT * FROM STAFFS WHERE STAFF_ID = ?::BIGINT
+                                <sql:param value="${election.created_by}"/>
+                            </sql:query>
+                            <c:set var="creator" value="${staff.rows[0]}" />
                             <div class="card border-0 shadow-sm h-100 bg-white border border-1" style="border-radius: 1rem;">
                                 <div class="card-body p-3">
                                     <p class="text-dark m-0">Created By</p>
                                     <div class="d-flex align-items-center justify-content-center gap-3 h-100 px-4">
                                         <div class="rounded-circle bg-white overflow-hidden mb-2 shadow-sm" style="width: 2.8rem; height: 2.8rem;">
-                                            <img src="" alt="Profile" class="w-100 h-100 object-fit-cover bg-primary">
+                                            <img src="${creator.profile_path}" alt="Profile" onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=No+Image';" class="w-100 h-100 object-fit-cover bg-primary">
                                         </div>
                                         <div class="me-auto">
-                                            <h3 class="h6 text-dark fw-semibold mb-0">Dr. Hafiz bin Ramli</h3>
+                                            <h3 class="h6 text-dark fw-semibold mb-0">${creator.full_name}</h3>
                                             <div class="badge rounded-pill px-3 py-1 mb-2 fw-normal bg-primary-subtle text-primary" style="font-size: 0.7rem;">
                                                 Staff
                                             </div>
@@ -166,7 +171,7 @@
                                     </div>
                                 </div>
                                 <hr class="mt-2 mb-0">
-                                <div class="card-body p-3">
+                                <div class="card-body p-3 d-flex flex-column gap-2">
                                     <div class="d-flex flex-grow-1">
                                         <p class="m-0 d-block">Created On</p>
                                         <p class="m-0 flex-grow-1 fw-semibold text-end">
