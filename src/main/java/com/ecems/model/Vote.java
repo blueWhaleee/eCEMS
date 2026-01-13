@@ -1,11 +1,12 @@
 package com.ecems.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class Vote implements Serializable
 {
     private int student_id, candidate_id;
-    private Integer rank;
+    private LocalDateTime created_at;
 
     public Vote() { }
 
@@ -13,14 +14,13 @@ public class Vote implements Serializable
     {
         this.student_id = student_id;
         this.candidate_id = candidate_id;
-        this.rank = rank;
     }
 
     public int getStudent_id() { return student_id; }
     public int getCandidate_id() { return candidate_id; }
-    public Integer getRank() { return rank; }
+    public LocalDateTime getCreated_at() { return created_at; }
 
     public void setStudent_id(int student_id) { this.student_id = student_id; }
     public void setCandidate_id(int candidate_id) { this.candidate_id = candidate_id; }
-    public void setRank(Integer rank) { this.rank = rank; }
+    public void setCreated_at(LocalDateTime created_at) { this.created_at = created_at; }
 }

@@ -15,6 +15,8 @@ import com.ecems.dao.ElectionDAO;
 import com.ecems.model.Candidate;
 import com.ecems.model.Election;
 import com.ecems.util.S3Connection;
+import com.ecems.model.Vote;
+import com.ecems.dao.VoteDAO;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -38,6 +40,7 @@ public class electionPageServlet extends HttpServlet {
 
     private ElectionDAO electionDAO;
     private CandidateDAO candidateDAO;
+    private VoteDAO voteDAO;
 
     @Override
     public void init() throws ServletException {
@@ -45,6 +48,7 @@ public class electionPageServlet extends HttpServlet {
     	// Initialize DAO object. Called once when servlet loads. 
     	electionDAO = new ElectionDAO();
         candidateDAO = new CandidateDAO();
+        voteDAO = new VoteDAO();
     }
 
     /**
@@ -156,6 +160,9 @@ public class electionPageServlet extends HttpServlet {
                     break;
                 case "close_election":
                     closeElection(request, response);
+                    break;
+                case "vote_election":
+                    voteElection(request, response);
                     break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
@@ -427,5 +434,55 @@ public class electionPageServlet extends HttpServlet {
             request.setAttribute("election", updated_election);
             request.setAttribute("error", "Failed to close the election");
             request.getRequestDispatcher("/views/staff/election.modify.jsp").forward(request, response);
+    }
+
+    private void voteElection(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String errorMsg = null;
+        int student_id = Integer.parseInt(request.getParameter("student_id"));
+        int election_id = Integer.parseInt(request.getParameter("election_id"));
+        String[] candidateIds = request.getParameterValues("candidateId");
+        Election election = electionDAO.getElectionByID(election_id);
+
+        try {
+            if (student_id <= 0) {
+                throw new Exception("Invalid student ID.");
+            }
+            if (voteDAO.checkVoted(student_id, election_id)) {
+                throw new Exception("You have already voted in this election.");
+            }
+
+            if (election != null && (candidateIds != null && candidateIds.length > 0)) {
+                int maxVotes = election.getMax_votes();
+                if (candidateIds.length == maxVotes) {
+                    for (String candidateIdStr : candidateIds) {
+                        int candidate_id = Integer.parseInt(candidateIdStr);
+                        
+                        Vote newVote = new Vote();
+                        newVote.setStudent_id(student_id);
+                        newVote.setCandidate_id(candidate_id);
+
+                        if (!voteDAO.createVote(newVote)) {
+                            throw new Exception("Failed to create vote in database");
+                        }
+                    }
+                    
+                    response.sendRedirect(request.getContextPath() + "/elections/page/" + election_id);
+                    return;
+                } else {
+                    throw new Exception("You must select exactly " + maxVotes + " candidates to vote.");
+                }
+            } else {
+                throw new Exception("No candidates selected for voting.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorMsg = e.getMessage();
+        }
+
+        request.setAttribute("election", election);
+        request.setAttribute("error", errorMsg);
+        request.getRequestDispatcher("/views/student/election.active.jsp").forward(request, response);
     }
 }
