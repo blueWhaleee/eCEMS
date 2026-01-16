@@ -164,6 +164,9 @@ public class electionPageServlet extends HttpServlet {
                 case "vote_election":
                     voteElection(request, response);
                     break;
+                case "delete_vote_election":
+                    deleteVoteElection(request, response);
+                    break;
                 default:
                     response.sendError(HttpServletResponse.SC_NOT_FOUND);
                     return;
@@ -485,4 +488,39 @@ public class electionPageServlet extends HttpServlet {
         request.setAttribute("error", errorMsg);
         request.getRequestDispatcher("/views/student/election.active.jsp").forward(request, response);
     }
+
+    private void deleteVoteElection(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        String errorMsg = null;
+        int student_id = Integer.parseInt(request.getParameter("student_id"));
+        int election_id = Integer.parseInt(request.getParameter("election_id"));
+        Election election = electionDAO.getElectionByID(election_id);
+
+        try {
+            if (student_id <= 0) {
+                throw new Exception("Invalid student ID.");
+            }
+            if (election != null && !election.getStatus().equalsIgnoreCase("active")) {
+                throw new Exception("Cannot withdraw vote. Election is not active.");
+            }
+            if (!voteDAO.checkVoted(student_id, election_id)) {
+                throw new Exception("You have not voted in this election.");
+            }
+
+            if (voteDAO.deleteVote(student_id, election_id)) {
+                response.sendRedirect(request.getContextPath() + "/elections/page/" + election_id);
+                return;
+            } else {
+                throw new Exception("Failed to delete vote from database");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            errorMsg = e.getMessage();
+        }
+
+        request.setAttribute("election", election);
+        request.setAttribute("error", errorMsg);
+        request.getRequestDispatcher("/views/student/election.active.jsp").forward(request, response);
+    }   
 }

@@ -256,28 +256,59 @@
                                 </div>
                             </div>
                         </div>
-                        <c:if test="${hasVoted == false}">
-                            <div class="col-12">
-                                <div class="card border-0 shadow-sm" style="background-color: #f0f2ff;">
-                                    <div class="card-body p-4">
-                                        <p class="text-uppercase text-dark fw-semibold small mb-2">
-                                            VOTES SELECTED
-                                        </p>
-                                        
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <div class="d-flex align-items-baseline">
-                                                <span class="vote-current display-4 fw-bold text-dark me-2">0</span>
-                                                <span class="fs-3 text-muted">/${election.max_votes}</span>
+                        <c:choose>
+                            <c:when test="${hasVoted == false}">
+                                <div class="col-12">
+                                    <div class="card border-0 shadow-sm" style="background-color: #f0f2ff;">
+                                        <div class="card-body p-4">
+                                            <p class="text-uppercase text-dark fw-semibold small mb-2">
+                                                VOTES SELECTED
+                                            </p>
+                                            
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <div class="d-flex align-items-baseline">
+                                                    <span class="vote-current display-4 fw-bold text-dark me-2">0</span>
+                                                    <span class="fs-3 text-muted">/${election.max_votes}</span>
+                                                </div>
                                             </div>
+                                            
+                                            <p class="text-secondary small mb-0">
+                                                You must select ${election.max_votes} candidates before you can submit your vote.
+                                            </p>
                                         </div>
-                                        
-                                        <p class="text-secondary small mb-0">
-                                            You must select ${election.max_votes} candidates before you can submit your vote.
-                                        </p>
                                     </div>
                                 </div>
-                            </div>
-                        </c:if>
+                            </c:when>
+                            <c:otherwise>
+                                <form method="POST" class="col-12" onclick="if(confirm('WARNING: Are you sure you want to recast your vote? This action cannot be undone.')) this.submit();">
+                                    <input type="hidden" name="election_id" value="${election.election_id}">
+                                    <input type="hidden" name="student_id" value="${sessionScope.loggedUser.stud_id}" />
+                                    <input type="hidden" name="action" value="delete_vote_election">
+
+                                    <div role="button" id="recast_election_btn" class="card border-0 shadow-sm h-100 bg-warning py-4 card-anim" style="border-radius: 1rem;">
+                                        <div class="card-body px-3 py-2">
+                                            <div class="d-flex align-items-center justify-content-center gap-4 h-100 px-4 text-white">
+                                                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_638_1136)">
+                                                        <path d="M23.453 3.58398e-07H21.2306C21.1545 -8.56237e-05 21.0791 0.0153 21.009 0.0452243C20.939 0.0751486 20.8757 0.118988 20.8231 0.174084C20.7705 0.229181 20.7297 0.294386 20.703 0.365746C20.6764 0.437105 20.6645 0.513133 20.6681 0.589219L20.8556 4.46859C19.7655 3.18398 18.4085 2.1523 16.8792 1.44535C15.3498 0.7384 13.6848 0.373145 12 0.375C5.59407 0.375 0.370316 5.60297 0.375003 12.0089C0.379691 18.4252 5.58282 23.625 12 23.625C14.8786 23.6291 17.6556 22.5611 19.7897 20.6292C19.8467 20.5782 19.8927 20.5161 19.9249 20.4467C19.9571 20.3773 19.9748 20.302 19.9769 20.2255C19.979 20.1491 19.9654 20.073 19.9371 20.0019C19.9088 19.9308 19.8663 19.8663 19.8122 19.8122L18.2184 18.2184C18.1176 18.1176 17.9822 18.0588 17.8396 18.0541C17.6971 18.0493 17.558 18.0988 17.4506 18.1927C16.1913 19.3006 14.6242 19.9984 12.9582 20.193C11.2922 20.3876 9.60644 20.0697 8.12569 19.2818C6.64495 18.4939 5.43954 17.2733 4.67017 15.7828C3.90081 14.2924 3.60403 12.6028 3.81941 10.9393C4.03479 9.27589 4.75209 7.71761 5.87569 6.47223C6.99929 5.22685 8.4758 4.35355 10.1084 3.96873C11.741 3.58392 13.4521 3.70588 15.0136 4.31836C16.5751 4.93083 17.9128 6.00473 18.8484 7.39688L14.0892 7.16859C14.0131 7.16498 13.9371 7.17685 13.8657 7.20349C13.7944 7.23014 13.7292 7.271 13.6741 7.32359C13.619 7.37619 13.5752 7.43943 13.5452 7.50948C13.5153 7.57953 13.4999 7.65492 13.5 7.73109V9.95344C13.5 10.1026 13.5593 10.2457 13.6648 10.3512C13.7702 10.4567 13.9133 10.5159 14.0625 10.5159H23.453C23.6022 10.5159 23.7452 10.4567 23.8507 10.3512C23.9562 10.2457 24.0155 10.1026 24.0155 9.95344V0.5625C24.0155 0.413316 23.9562 0.270242 23.8507 0.164753C23.7452 0.0592636 23.6022 3.58398e-07 23.453 3.58398e-07Z" fill="white"/>
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_638_1136">
+                                                            <rect width="24" height="24" fill="white"/>
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+
+                                                <div class="me-auto">
+                                                    <h3 class="h6 fw-semibold mb-0">Withdraw Vote</h3>
+                                                    <p class="small opacity-75 mb-0">Recast your vote</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
                         <c:if test="${not empty error}">
                             <div class="col-12">
                                 <div class="alert alert-danger alert-dismissible fade show rounded-4" role="alert">

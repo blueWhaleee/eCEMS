@@ -31,6 +31,10 @@ public class VoteDAO {
         "SELECT V.* FROM VOTES V " +
         "JOIN CANDIDATES C ON V.CANDIDATE_ID = C.CANDIDATE_ID " +
         "WHERE V.STUDENT_ID = ? AND C.ELECTION_ID = ?";
+
+    private static final String DELETE_VOTE_SQL = 
+            "DELETE FROM VOTES " +
+            "WHERE STUDENT_ID = ? AND CANDIDATE_ID IN (SELECT CANDIDATE_ID FROM CANDIDATES WHERE ELECTION_ID = ?)";
         
     public boolean createVote(Vote vote) {
         try {
@@ -58,6 +62,22 @@ public class VoteDAO {
             rs = pstmt.executeQuery();
 
             return rs.next(); // If there's a result, the student has voted
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean deleteVote(int student_id, int election_id) {
+        try {
+            conn = DBConnection.createConnection();
+            pstmt = conn.prepareStatement(DELETE_VOTE_SQL);
+            pstmt.setInt(1, student_id);
+            pstmt.setInt(2, election_id);
+
+            int rowAffected = pstmt.executeUpdate();
+            return rowAffected > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
