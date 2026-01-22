@@ -123,7 +123,7 @@
                         <input type="hidden" name="student_id" value="${sessionScope.loggedUser.stud_id}" />
                         <div class="d-flex flex-column gap-3">
                             <c:forEach var="candidate" items="${candidates.rows}" varStatus="loop">
-                                <div class="card w-100 ${loop.index == 0 ? 'border border-1 border-primary bg-primary-subtle' : ''}">
+                                <div class="card w-100 ${loop.index == 0 ? 'border border-1 border-primary bg-primary-subtle' : 'bg-light'}">
                                     <div class="card-body p-4">
                                         <div class="d-flex flex-column flex-lg-row align-items-center gap-3">
                                             <div class="rounded-circle bg-white overflow-hidden shadow-sm" style="width: 4rem; height: 4rem;">
@@ -153,14 +153,14 @@
                                                 </h3>
                                                 <p class="fs-6 text-muted mb-0">${candidate.slogan}</p>
                                             </div>
-                                            <div class="d-flex flex-row align-items-end text-center gap-3 me-3">
+                                            <div class="d-flex flex-row align-items-center justify-content-center text-center gap-3 me-3">
                                                 <c:choose>
                                                     <c:when test="${candidate.status == 'withdrawn'}">
-                                                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="mb-2">
+                                                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="m-0">
                                                             <circle cx="20" cy="20" r="15" stroke="#6c757d80" stroke-width="1.5"/>
                                                             <path d="M15 20H25" stroke="#6c757d80" stroke-width="1.5" stroke-linecap="round"/>
                                                         </svg>
-                                                        <span class="fw-semibold text-secondary">Withdrawn</span>
+                                                        <span class="fw-semibold text-secondary opacity-75 fs-4" style="color: #6c757d80">WITHDRAWN</span>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <div class="d-flex flex-column align-items-center">
@@ -207,15 +207,20 @@
                             </div>
                         </div>
                         <div class="col-12">
+                            <sql:query var="staff" dataSource="${myDatasource}">
+                                SELECT * FROM STAFFS WHERE STAFF_ID = ?::BIGINT
+                                <sql:param value="${election.created_by}"/>
+                            </sql:query>
+                            <c:set var="creator" value="${staff.rows[0]}" />
                             <div class="card border-0 shadow-sm h-100 bg-white border border-1" style="border-radius: 1rem;">
                                 <div class="card-body p-3">
                                     <p class="text-dark m-0">Created By</p>
                                     <div class="d-flex align-items-center justify-content-center gap-3 h-100 px-4">
                                         <div class="rounded-circle bg-white overflow-hidden mb-2 shadow-sm" style="width: 2.8rem; height: 2.8rem;">
-                                            <img src="" alt="Profile" class="w-100 h-100 object-fit-cover bg-primary">
+                                            <img src="${creator.profile_path}" alt="Profile" onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=No+Image';" class="w-100 h-100 object-fit-cover bg-primary">
                                         </div>
                                         <div class="me-auto">
-                                            <h3 class="h6 text-dark fw-semibold mb-0">Dr. Hafiz bin Ramli</h3>
+                                            <h3 class="h6 text-dark fw-semibold mb-0">${creator.full_name}</h3>
                                             <div class="badge rounded-pill px-3 py-1 mb-2 fw-normal bg-primary-subtle text-primary" style="font-size: 0.7rem;">
                                                 Staff
                                             </div>
@@ -223,7 +228,7 @@
                                     </div>
                                 </div>
                                 <hr class="mt-2 mb-0">
-                                <div class="card-body p-3">
+                                <div class="card-body p-3 d-flex flex-column gap-2">
                                     <div class="d-flex flex-grow-1">
                                         <p class="m-0 d-block">Created On</p>
                                         <p class="m-0 flex-grow-1 fw-semibold text-end">
@@ -232,22 +237,23 @@
                                         </p>
                                     </div>
                                     <div class="d-flex flex-grow-1">
-                                        <p class="m-0 d-block">Started On</p>
+                                        <p class="m-0 d-block">Starting On</p>
                                         <p class="m-0 flex-grow-1 fw-semibold text-end">
                                             <fmt:parseDate  value="${election.start_date}" type="date" pattern="yyyy-MM-dd" var="parsedStart" />
                                             <fmt:formatDate pattern="EEEE, MMM dd, yyyy" value="${parsedStart}"/>
                                         </p>
                                     </div>
-                                    <div class="d-flex flex-grow-1">
-                                        <p class="m-0 d-block">Closed On</p>
-                                        <p class="m-0 flex-grow-1 fw-semibold text-end">
-                                            <fmt:parseDate  value="${election.end_date}" type="date" pattern="yyyy-MM-dd" var="parsedEnd" />
-                                            <fmt:formatDate pattern="EEEE, MMM dd, yyyy" value="${parsedEnd}"/>
-                                        </p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <c:if test="${not empty error}">
+                            <div class="col-12">
+                                <div class="alert alert-danger alert-dismissible fade show rounded-4" role="alert">
+                                    <strong>Error!</strong> ${error}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
             </main>
@@ -287,7 +293,7 @@
                             <div class="col-12">
                                 <label class="form-label small fw-semibold">Campaign Banner</label>
                                 <div class="pt-1 rounded-4 overflow-hidden mb-3" style="aspect-ratio: 1;">
-                                    <img id="bannerPhoto" src="" alt="Banner" class="w-100 h-100 object-fit-cover">
+                                    <img id="bannerPhoto" src="" alt="Banner" onerror="this.onerror=null;this.src='https://placehold.co/600x400?text=No+Image';" class="w-100 h-100 object-fit-cover">
                                 </div>
                             </div>
                         </div>
@@ -306,14 +312,14 @@
             $(document).ready(function () {
                 $('#candidateModal').on('show.bs.modal', function(event) {
                     var trigger = $(event.relatedTarget);
-                    var candidateId   = trigger.data('candidateId');
-                    var fullName      = trigger.data('candidateName');
-                    var slogan        = trigger.data('candidateSlogan');
+                    var candidateId = trigger.data('candidateId');
+                    var fullName = trigger.data('candidateName');
+                    var slogan = trigger.data('candidateSlogan');
                     var studNumber = trigger.data('candidateStudNumber');
-                    var manifesto     = trigger.data('candidateManifesto');
-                    var photo         = trigger.data('candidatePhotoUrl');
-                    var banner        = trigger.data('candidateBannerUrl');
-                    var status        = trigger.data('candidateStatus');
+                    var manifesto = trigger.data('candidateManifesto');
+                    var photo = trigger.data('candidatePhotoUrl');
+                    var banner = trigger.data('candidateBannerUrl');
+                    var status = trigger.data('candidateStatus');
 
                     // Now populate your modal dynamically
                     $('#candidateIdHidden').val(candidateId);

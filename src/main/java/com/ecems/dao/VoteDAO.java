@@ -45,6 +45,10 @@ public class VoteDAO {
             pstmt.setInt(2, vote.getCandidate_id());
 
             int rowAffected = pstmt.executeUpdate();
+            
+            pstmt.close();
+            conn.close();
+            
             return rowAffected > 0;
 
         } catch (SQLException e) {
@@ -61,7 +65,12 @@ public class VoteDAO {
             pstmt.setInt(2, election_id);
             rs = pstmt.executeQuery();
 
-            return rs.next(); // If there's a result, the student has voted
+            boolean check = rs.next();
+            
+            pstmt.close();
+            conn.close();
+            
+            return check; // If there's a result, the student has voted
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,6 +86,10 @@ public class VoteDAO {
             pstmt.setInt(2, election_id);
 
             int rowAffected = pstmt.executeUpdate();
+            
+            pstmt.close();
+            conn.close();
+            
             return rowAffected > 0;
 
         } catch (SQLException e) {

@@ -93,6 +93,14 @@
                                 <div class="col-12">
                                     <button class="btn btn-sm btn-primary rounded-pill px-4" id="filterBtn">Apply Filters</button>
                                     <button class="btn btn-sm btn-secondary rounded-pill px-4" id="clearFilterBtn">Clear Filters</button>
+                                    <button onclick="downloadAsPDF()" class="btn btn-sm rounded-pill px-4 btn-outline-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-1">
+                                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                            <polyline points="7 10 12 15 17 10"/>
+                                            <line x1="12" y1="15" x2="12" y2="3"/>
+                                        </svg>
+                                        Download as PDF
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -190,7 +198,7 @@
                                         <td>${election.session != null ? election.session : '-'}</td>
                                         <td>
                                             <c:if test="${election.election_type == 'campus'}">
-                                                <span class="badge bg-info text-dark">Campus-wide</span>
+                                                <span class="badge bg-secondary text-white">Campus</span>
                                             </c:if>
                                             <c:if test="${election.election_type == 'faculty'}">
                                                 <span class="badge bg-primary">Faculty</span>
@@ -200,18 +208,26 @@
                                         <td>
                                             <c:choose>
                                                 <c:when test="${election.status == 'upcoming'}">
-                                                    <span class="badge bg-warning text-dark">Upcoming</span>
+                                                    <span class="badge rounded-2" style="background-color: #4c3d99; color: white; width: fit-content; ">
+                                                        Upcoming
+                                                    </span>
                                                 </c:when>
                                                 <c:when test="${election.status == 'active'}">
-                                                    <span class="badge bg-success">Active</span>
+                                                    <span class="badge rounded-2" style="background-color: #7367F0; color: white; width: fit-content; ">
+                                                        Active
+                                                    </span>
                                                 </c:when>
                                                 <c:when test="${election.status == 'closed'}">
-                                                    <span class="badge bg-secondary">Closed</span>
+                                                    <span class="badge rounded-2" style="background-color: #d4d4f7; color: #5b4fc9; width: fit-content; ">
+                                                        Closed
+                                                    </span>
                                                 </c:when>
-                                                <c:when test="${election.status == 'cancelled'}">
-                                                    <span class="badge bg-danger">Cancelled</span>
-                                                </c:when>
-                                            </c:choose>
+                                                <c:otherwise>
+                                                    <span class="badge rounded-2" style="background-color: #9CA3AF; color: white; width: fit-content; ">
+                                                        ${election.status}
+                                                    </span>
+                                                </c:otherwise>
+                                            </c:choose>  
                                         </td>
                                         <td><fmt:formatDate value="${election.start_date}" pattern="dd MMM yyyy"/></td>
                                         <td><fmt:formatDate value="${election.end_date}" pattern="dd MMM yyyy"/></td>
@@ -241,6 +257,8 @@
         <script src="https://cdn.jsdelivr.net/npm/datatables-buttons@1.2.4/js/buttons.print.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
         <script>
             $(document).ready(function() {
@@ -389,7 +407,60 @@
                         applyFilters();
                     }
                 });
+
             });
+            
+            async function downloadAsPDF() {
+                const { jsPDF } = window.jspdf;
+                const element = document.querySelector('#reportTable');
+
+                const canvas = await html2canvas(element, {
+                    scale: 2,               // higher = sharper text (but bigger file)
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#ffffff'   // avoid transparent → white edges
+                });
+
+                const imgData = canvas.toDataURL('image/png');
+
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                // ── Key part: get real PDF page width ──
+                const pdfWidth = pdf.internal.pageSize.getWidth();     // ≈ 210 mm for A4
+                const pdfHeight = pdf.internal.pageSize.getHeight();   // ≈ 297 mm
+
+                // Get original image dimensions (in pixels)
+                const imgProps = pdf.getImageProperties(imgData);
+                const imgWidthPx  = imgProps.width;
+                const imgHeightPx = imgProps.height;
+
+                // Scale so width fills the full page (no right margin/empty space)
+                const ratio = pdfWidth / imgWidthPx;
+                const finalImgWidth  = pdfWidth;
+                const finalImgHeight = imgHeightPx * ratio;
+
+                // If content is very long → add pages automatically
+                let heightLeft = finalImgHeight;
+                let position = 0;
+
+                pdf.addImage(imgData, 'PNG', 0, position, finalImgWidth, finalImgHeight);
+
+                heightLeft -= pdfHeight;
+
+                while (heightLeft > 0) {
+                    position = heightLeft - finalImgHeight;  // negative = continue from previous cut
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, finalImgWidth, finalImgHeight);
+                    heightLeft -= pdfHeight;
+                }
+
+                const dateString = new Date().toLocaleDateString();
+                pdf.save('Election-Report-'+ new Date().toLocaleDateString() + '.pdf');
+            }
         </script>
     </body>
 </html>

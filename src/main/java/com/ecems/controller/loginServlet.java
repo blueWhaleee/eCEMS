@@ -68,7 +68,6 @@ public class loginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         List<String> errors = new ArrayList<>();
-        System.out.println(request.getParameterMap());
         String is_staff = request.getParameter("is_staff");
         String number = request.getParameter("number");
         String password = request.getParameter("password");

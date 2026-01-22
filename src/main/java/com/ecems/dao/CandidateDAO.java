@@ -47,6 +47,10 @@ public class CandidateDAO {
             pstmt.setInt(6, candidate.getStudent_id());
 
             int rowAffected = pstmt.executeUpdate();
+            
+            pstmt.close();
+            conn.close();
+            
             return rowAffected > 0;
 
         } catch (SQLException e) {

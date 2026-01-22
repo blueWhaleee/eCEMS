@@ -19,6 +19,8 @@
 
     <!-- Base path for all relative URLs -->
     <base href="${pageContext.request.contextPath}/">
+
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/image/jpjpp_logo.png">
   
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" type="text/css">

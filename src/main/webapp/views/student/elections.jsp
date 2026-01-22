@@ -25,10 +25,10 @@
     <c:set var="counts" value="${stats.rows[0]}" />
 
     <sql:query dataSource="${myDatasource}" var="electionList">
-        SELECT DISTINCT ON (e.election_id)
+        SELECT 
             e.*,
             CASE 
-                WHEN v.student_id IS NOT NULL THEN 'voted'
+                WHEN voted.student_id IS NOT NULL THEN 'voted'
                 ELSE 'not-voted'
             END as vote_status,
             e.START_DATE::DATE - CURRENT_DATE AS STARTING_IN,
@@ -36,9 +36,13 @@
             CURRENT_DATE - e.START_DATE::DATE AS STARTED_AGO,
             CURRENT_DATE - e.END_DATE::DATE AS ENDED_AGO,
             CURRENT_DATE - e.CREATED_AT::DATE AS CREATED_AGO
-        FROM public.elections e
-        LEFT JOIN public.candidates c ON e.election_id = c.election_id
-        LEFT JOIN public.votes v ON c.candidate_id = v.candidate_id AND v.student_id = ?
+        FROM elections e
+        LEFT JOIN (
+            SELECT DISTINCT c.election_id, v.student_id
+            FROM public.candidates c
+            JOIN public.votes v ON c.candidate_id = v.candidate_id
+            WHERE v.student_id = ?
+        ) voted ON e.election_id = voted.election_id
         WHERE e.campus_id = ?
         AND (
             (e.election_type = 'campus' AND e.faculty_id IS NULL)
@@ -46,7 +50,7 @@
             (e.election_type = 'faculty' AND e.faculty_id = ?)
         )
         AND e.STATUS != 'cancelled'
-        ORDER BY e.election_id, e.created_at DESC
+        ORDER BY e.created_at DESC
         <sql:param value="${loggedUser.stud_id}" />
         <sql:param value="${loggedUser.campus_id}" />
         <sql:param value="${loggedUser.faculty_id}" />

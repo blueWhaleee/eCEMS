@@ -74,8 +74,31 @@ public class StudentDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            // Close resources in reverse order of creation
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return null;
+            return null;
     }
 
     public Student checkStudentNumber(String stud_number) {
@@ -91,6 +114,29 @@ public class StudentDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            // Close resources in reverse order of creation
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return null;
     }

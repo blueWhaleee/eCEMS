@@ -89,7 +89,7 @@
                                 </c:otherwise>
                             </c:choose>
                             <c:if test="${hasVoted}">
-                                <span class="badge bg-primary-subtle text-dark border border-1 border-dark px-3 py-2">
+                                <span class="badge bg-primary-subtle text-primary border border-1 border-primary px-3 py-2">
                                     VOTED
                                 </span>
                             </c:if>
@@ -215,15 +215,20 @@
                             </div>
                         </div>
                         <div class="col-12">
+                            <sql:query var="staff" dataSource="${myDatasource}">
+                                SELECT * FROM STAFFS WHERE STAFF_ID = ?::BIGINT
+                                <sql:param value="${election.created_by}"/>
+                            </sql:query>
+                            <c:set var="creator" value="${staff.rows[0]}" />
                             <div class="card border-0 shadow-sm h-100 bg-white border border-1" style="border-radius: 1rem;">
                                 <div class="card-body p-3">
                                     <p class="text-dark m-0">Created By</p>
                                     <div class="d-flex align-items-center justify-content-center gap-3 h-100 px-4">
                                         <div class="rounded-circle bg-white overflow-hidden mb-2 shadow-sm" style="width: 2.8rem; height: 2.8rem;">
-                                            <img src="" alt="Profile" class="w-100 h-100 object-fit-cover bg-primary">
+                                            <img src="${creator.profile_path}" alt="Profile" onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=No+Image';" class="w-100 h-100 object-fit-cover bg-primary">
                                         </div>
                                         <div class="me-auto">
-                                            <h3 class="h6 text-dark fw-semibold mb-0">Dr. Hafiz bin Ramli</h3>
+                                            <h3 class="h6 text-dark fw-semibold mb-0">${creator.full_name}</h3>
                                             <div class="badge rounded-pill px-3 py-1 mb-2 fw-normal bg-primary-subtle text-primary" style="font-size: 0.7rem;">
                                                 Staff
                                             </div>
@@ -231,7 +236,7 @@
                                     </div>
                                 </div>
                                 <hr class="mt-2 mb-0">
-                                <div class="card-body p-3">
+                                <div class="card-body p-3 d-flex flex-column gap-2">
                                     <div class="d-flex flex-grow-1">
                                         <p class="m-0 d-block">Created On</p>
                                         <p class="m-0 flex-grow-1 fw-semibold text-end">
@@ -240,22 +245,23 @@
                                         </p>
                                     </div>
                                     <div class="d-flex flex-grow-1">
-                                        <p class="m-0 d-block">Started On</p>
+                                        <p class="m-0 d-block">Starting On</p>
                                         <p class="m-0 flex-grow-1 fw-semibold text-end">
                                             <fmt:parseDate  value="${election.start_date}" type="date" pattern="yyyy-MM-dd" var="parsedStart" />
                                             <fmt:formatDate pattern="EEEE, MMM dd, yyyy" value="${parsedStart}"/>
                                         </p>
                                     </div>
-                                    <div class="d-flex flex-grow-1">
-                                        <p class="m-0 d-block">Ending On</p>
-                                        <p class="m-0 flex-grow-1 fw-semibold text-end">
-                                            <fmt:parseDate  value="${election.end_date}" type="date" pattern="yyyy-MM-dd" var="parsedEnd" />
-                                            <fmt:formatDate pattern="EEEE, MMM dd, yyyy" value="${parsedEnd}"/>
-                                        </p>
-                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <c:if test="${not empty error}">
+                            <div class="col-12">
+                                <div class="alert alert-danger alert-dismissible fade show rounded-4" role="alert">
+                                    <strong>Error!</strong> ${error}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </c:if>
                         <c:choose>
                             <c:when test="${hasVoted == false}">
                                 <div class="col-12">
@@ -356,7 +362,7 @@
                             <div class="col-12">
                                 <label class="form-label small fw-semibold">Campaign Banner</label>
                                 <div class="pt-1 rounded-4 overflow-hidden mb-3" style="aspect-ratio: 1;">
-                                    <img id="bannerPhoto" src="" alt="Banner" class="w-100 h-100 object-fit-cover">
+                                    <img id="bannerPhoto" src="" onerror="this.onerror=null; this.src='https://placehold.co/600x400?text=No+Image';" alt="Banner" class="w-100 h-100 object-fit-cover">
                                 </div>
                             </div>
                         </div>

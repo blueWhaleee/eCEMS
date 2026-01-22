@@ -104,14 +104,8 @@
                         <c:when test="${election.candidacy_open && isCandidate.count == 0}">
                             <button type="button" class="mx-auto px-5 btn rounded-pill bg-white border border-1 card-anim d-flex flex-row gap-2 justify-content-center align-items-center text-dark py-2" data-bs-toggle="modal" data-bs-target="#registerCandidateModal">
                                 <svg width="20" height="20" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_525_1117)">
-                                    <path d="M600 300H133.333V266.667H600V300ZM433.333 400H133.333V433.333H433.333V400ZM700 133.333V433.333H666.667V166.667H66.6668V600H366.667V633.333H33.3335V133.333H700ZM769 521.233L745.433 497.667L550 693.1L454.567 597.667L431 621.233L550 740.233L769 521.233Z" fill="currentColor"/>
-                                    </g>
-                                    <defs>
-                                    <clipPath id="clip0_525_1117">
-                                    <rect width="800" height="800" fill="white"/>
-                                    </clipPath>
-                                    </defs>
+                                    <g clip-path="url(#clip0_525_1117)"> <path d="M600 300H133.333V266.667H600V300ZM433.333 400H133.333V433.333H433.333V400ZM700 133.333V433.333H666.667V166.667H66.6668V600H366.667V633.333H33.3335V133.333H700ZM769 521.233L745.433 497.667L550 693.1L454.567 597.667L431 621.233L550 740.233L769 521.233Z" fill="currentColor"/> </g>
+                                    <defs> <clipPath id="clip0_525_1117"> <rect width="800" height="800" fill="white"/> </clipPath> </defs>
                                 </svg>
                                 APPLY AS CANDIDATE
                             </button>
