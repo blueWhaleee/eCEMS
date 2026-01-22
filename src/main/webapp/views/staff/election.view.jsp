@@ -204,7 +204,7 @@
                                 </div>
                             </div>
 
-                            <c:if test="${election.status == 'active'}">
+                            <c:if test="${election.status == 'active' || election.status == 'closed'}">
                                 <div class="accordion-item border-1 shadow-sm mb-3 rounded-4 overflow-hidden">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button fw-bold bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseResults">
